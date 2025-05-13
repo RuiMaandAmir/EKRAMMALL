@@ -1,0 +1,344 @@
+.container {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 统计卡片 */
+.stats-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stats-value {
+  font-size: 36rpx;
+  color: #ff4d4f;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.stats-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 筛选器 */
+.filter-bar {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.type-list {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.type-item {
+  flex: 1;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.type-item.active {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  height: 70rpx;
+  background: #f5f5f5;
+  border-radius: 35rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+}
+
+/* 成员列表 */
+.member-list {
+  height: calc(100vh - 400rpx);
+}
+
+.member-item {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.member-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.info {
+  flex: 1;
+}
+
+.nickname {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.phone {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.member-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.member-status.active {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.member-status.inactive {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.member-content {
+  margin-bottom: 20rpx;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-item .label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.stat-item .value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.member-footer {
+  border-top: 1rpx solid #f0f0f0;
+  padding-top: 20rpx;
+}
+
+.member-footer .btn {
+  font-size: 28rpx;
+  padding: 0 30rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 30rpx;
+  background: #ff4d4f;
+  color: #fff;
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30rpx 0;
+}
+
+.loading-icon {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #ff4d4f;
+  border-radius: 50%;
+  margin-right: 10rpx;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 空状态 */
+.empty-state {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 60rpx 30rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.empty-tips {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 没有更多数据 */
+.no-more {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 邀请按钮 */
+.invite-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 20rpx 30rpx;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.invite-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+}
+
+/* 邀请弹窗 */
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog-content {
+  width: 80%;
+  background: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.dialog-title {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.dialog-body {
+  padding: 30rpx;
+}
+
+.invite-qrcode {
+  width: 400rpx;
+  height: 400rpx;
+  margin: 0 auto 30rpx;
+}
+
+.invite-qrcode image {
+  width: 100%;
+  height: 100%;
+}
+
+.invite-link {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.link-text {
+  flex: 1;
+  font-size: 24rpx;
+  color: #666;
+  word-break: break-all;
+}
+
+.copy-btn {
+  font-size: 24rpx;
+  padding: 0 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 25rpx;
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.dialog-footer {
+  border-top: 1rpx solid #f0f0f0;
+  padding: 20rpx;
+}
+
+.dialog-footer .btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+} 

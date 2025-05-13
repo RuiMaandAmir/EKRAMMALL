@@ -1,0 +1,227 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'admin/css/distributors.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">分销商管理</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="搜索用户名/邮箱" id="searchInput">
+                            <div class="input-group-append">
+                                <button class="btn btn-default" type="button" onclick="searchDistributors()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>邮箱</th>
+                                    <th>佣金余额</th>
+                                    <th>累计佣金</th>
+                                    <th>分销订单数</th>
+                                    <th>注册时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for distributor in distributors %}
+                                <tr>
+                                    <td>{{ distributor.user.id }}</td>
+                                    <td>{{ distributor.user.username }}</td>
+                                    <td>{{ distributor.user.email }}</td>
+                                    <td>¥{{ distributor.balance }}</td>
+                                    <td>¥{{ distributor.total_commission }}</td>
+                                    <td>{{ distributor.order_count }}</td>
+                                    <td>{{ distributor.created_at|date:"Y-m-d H:i" }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="viewDistributor({{ distributor.user.id }})">查看</button>
+                                        <button class="btn btn-sm btn-warning" onclick="adjustCommission({{ distributor.user.id }})">调整佣金</button>
+                                        <button class="btn btn-sm btn-danger" onclick="revokeDistributor({{ distributor.user.id }})">取消分销商</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分销商详情模态框 -->
+<div class="modal fade" id="distributorDetailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">分销商详情</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="distributorDetailContent">
+                    <!-- 分销商详情内容将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 调整佣金模态框 -->
+<div class="modal fade" id="adjustCommissionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">调整佣金</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="adjustCommissionForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="distributorId" name="distributor_id">
+                    <div class="form-group">
+                        <label>调整金额</label>
+                        <input type="number" class="form-control" name="amount" step="0.01" required>
+                        <small class="form-text text-muted">正数表示增加佣金，负数表示减少佣金</small>
+                    </div>
+                    <div class="form-group">
+                        <label>备注</label>
+                        <textarea class="form-control" name="remark" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitCommissionAdjustment()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+function searchDistributors() {
+    const searchTerm = document.getElementById('searchInput').value;
+    // 实现搜索功能
+}
+
+function viewDistributor(userId) {
+    fetch(`/api/distributors/${userId}/`)
+        .then(response => response.json())
+        .then(data => {
+            const content = document.getElementById('distributorDetailContent');
+            content.innerHTML = `
+                <div class="distributor-info">
+                    <p><strong>用户名：</strong>${data.user.username}</p>
+                    <p><strong>邮箱：</strong>${data.user.email}</p>
+                    <p><strong>佣金余额：</strong>¥${data.balance}</p>
+                    <p><strong>累计佣金：</strong>¥${data.total_commission}</p>
+                    <p><strong>分销订单数：</strong>${data.order_count}</p>
+                    <p><strong>注册时间：</strong>${data.created_at}</p>
+                </div>
+                <div class="commission-records">
+                    <h6>佣金记录</h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>金额</th>
+                                <th>类型</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.commission_records.map(record => `
+                                <tr>
+                                    <td>${record.created_at}</td>
+                                    <td>¥${record.amount}</td>
+                                    <td>${record.type}</td>
+                                    <td>${record.remark || '-'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            $('#distributorDetailModal').modal('show');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('获取分销商详情失败，请重试');
+        });
+}
+
+function adjustCommission(userId) {
+    document.getElementById('distributorId').value = userId;
+    $('#adjustCommissionModal').modal('show');
+}
+
+function submitCommissionAdjustment() {
+    const form = document.getElementById('adjustCommissionForm');
+    const formData = new FormData(form);
+    
+    fetch('/api/distributors/adjust_commission/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('调整佣金失败：' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('调整佣金失败，请重试');
+    });
+}
+
+function revokeDistributor(userId) {
+    if (confirm('确定要取消该用户的分销商资格吗？')) {
+        fetch(`/api/distributors/${userId}/revoke/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('取消分销商资格失败：' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('取消分销商资格失败，请重试');
+        });
+    }
+}
+</script>
+{% endblock %} 

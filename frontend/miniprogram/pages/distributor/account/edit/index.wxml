@@ -1,0 +1,97 @@
+<view class="container">
+  <view class="form">
+    <!-- 账户类型选择 -->
+    <view class="form-item">
+      <view class="label">账户类型</view>
+      <view class="type-list">
+        <view 
+          class="type-item {{type === 'wechat' ? 'active' : ''}}" 
+          bindtap="selectType" 
+          data-type="wechat"
+        >
+          微信
+        </view>
+        <view 
+          class="type-item {{type === 'bank' ? 'active' : ''}}" 
+          bindtap="selectType" 
+          data-type="bank"
+        >
+          银行卡
+        </view>
+      </view>
+    </view>
+
+    <!-- 微信账户信息 -->
+    <block wx:if="{{type === 'wechat'}}">
+      <view class="form-item">
+        <view class="label">微信账号</view>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入微信账号" 
+          value="{{wechatAccount}}" 
+          bindinput="onWechatAccountInput"
+        />
+      </view>
+      <view class="form-item">
+        <view class="label">微信昵称</view>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入微信昵称" 
+          value="{{wechatName}}" 
+          bindinput="onWechatNameInput"
+        />
+      </view>
+    </block>
+
+    <!-- 银行卡信息 -->
+    <block wx:if="{{type === 'bank'}}">
+      <view class="form-item">
+        <view class="label">银行名称</view>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入银行名称" 
+          value="{{bankName}}" 
+          bindinput="onBankNameInput"
+        />
+      </view>
+      <view class="form-item">
+        <view class="label">支行名称</view>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入支行名称（选填）" 
+          value="{{branchName}}" 
+          bindinput="onBranchNameInput"
+        />
+      </view>
+      <view class="form-item">
+        <view class="label">银行卡号</view>
+        <input 
+          class="input" 
+          type="number" 
+          placeholder="请输入银行卡号" 
+          value="{{bankAccount}}" 
+          bindinput="onBankAccountInput"
+        />
+      </view>
+      <view class="form-item">
+        <view class="label">持卡人姓名</view>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入持卡人姓名" 
+          value="{{cardholder}}" 
+          bindinput="onCardholderInput"
+        />
+      </view>
+    </block>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="action-bar">
+    <button class="submit-btn" bindtap="submitForm" disabled="{{!canSubmit}}">保存</button>
+  </view>
+</view> 

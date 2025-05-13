@@ -1,0 +1,69 @@
+.container {
+  padding: 40rpx;
+}
+
+.result {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.result.success {
+  color: #67c23a;
+}
+
+.result.fail {
+  color: #f56c6c;
+}
+
+.icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.desc {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.order-info {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 10rpx;
+  margin: 40rpx 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #666;
+  font-size: 28rpx;
+}
+
+.value {
+  color: #333;
+  font-size: 28rpx;
+}
+
+.action {
+  margin-top: 40rpx;
+}
+
+.btn {
+  margin-bottom: 20rpx;
+} 

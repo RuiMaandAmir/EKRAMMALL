@@ -1,0 +1,86 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}后台登录 | 伊客拉穆商城{% endblock %}
+
+{% block extrastyle %}
+<style>
+    body {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        min-height: 100vh;
+        font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+    }
+    .login-container {
+        max-width: 400px;
+        margin: 80px auto 0 auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        padding: 40px 32px 32px 32px;
+        text-align: center;
+    }
+    .login-logo {
+        width: 60px;
+        margin-bottom: 16px;
+    }
+    .login-title {
+        font-size: 2rem;
+        color: #1abc9c;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    .login-desc {
+        color: #888;
+        margin-bottom: 24px;
+    }
+    .login-form input[type="text"], .login-form input[type="password"] {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 18px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+    .login-form input[type="submit"] {
+        width: 100%;
+        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 12px 0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .login-form input[type="submit"]:hover {
+        background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+    }
+    .errornote {
+        color: #e74c3c;
+        margin-bottom: 16px;
+        font-size: 1rem;
+    }
+    @media (max-width: 500px) {
+        .login-container { padding: 24px 8px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <img src="{% static 'admin/img/logo.png' %}" class="login-logo" alt="LOGO">
+    <div class="login-title">伊客拉穆商城后台</div>
+    <div class="login-desc">请使用管理员账号登录后台管理系统</div>
+    {% if form.errors %}
+        <div class="errornote">用户名或密码错误，请重试。</div>
+    {% endif %}
+    <form method="post" class="login-form" id="login-form" action="{% url 'admin:login' %}">
+        {% csrf_token %}
+        <input type="text" name="username" autofocus required placeholder="用户名" autocomplete="username">
+        <input type="password" name="password" required placeholder="密码" autocomplete="current-password">
+        <input type="submit" value="登录">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</div>
+{% endblock %} 

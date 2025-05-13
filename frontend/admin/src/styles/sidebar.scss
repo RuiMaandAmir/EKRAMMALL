@@ -1,0 +1,167 @@
+// 侧边栏样式
+@import './variables.scss';
+
+.sidebar-container {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  width: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(to bottom, $--color-primary-light-8, $--color-primary-light-9);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  transition: width 0.28s;
+  z-index: 1001;
+  
+  // 隐藏滚动条但允许滚动
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
+  
+  .el-menu {
+    width: 100%;
+    border: none;
+  }
+  
+  .el-menu-item, 
+  .el-sub-menu__title {
+    height: 50px;
+    line-height: 50px;
+    color: $--color-text-primary;
+    
+    &:hover {
+      background-color: $--color-primary-light-7 !important;
+    }
+  }
+  
+  .el-sub-menu {
+    .el-menu-item {
+      height: 45px;
+      line-height: 45px;
+      background-color: rgba(255, 255, 255, 0.5) !important;
+      
+      &:hover {
+        background-color: $--color-primary-light-7 !important;
+      }
+      
+      &.is-active {
+        background-color: $--color-primary-light-8 !important;
+      }
+    }
+  }
+  
+  // Logo样式
+  .sidebar-logo-container {
+    height: 60px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    
+    .sidebar-logo {
+      width: 32px;
+      height: 32px;
+      margin-right: 12px;
+    }
+    
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: $--color-primary-dark-2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  
+  // 图标样式
+  .svg-icon, i {
+    margin-right: 16px;
+    color: inherit;
+    font-size: 18px;
+    vertical-align: middle;
+  }
+  
+  // 折叠后样式
+  &.is-collapsed {
+    width: 64px;
+    
+    .el-menu--collapse {
+      width: 64px;
+    }
+    
+    .sidebar-logo-container {
+      padding: 10px 16px;
+      
+      .sidebar-title {
+        display: none;
+      }
+      
+      .sidebar-logo {
+        margin-right: 0;
+      }
+    }
+    
+    .el-sub-menu {
+      &.is-active {
+        > .el-sub-menu__title {
+          color: $--color-primary !important;
+        }
+      }
+      
+      > .el-sub-menu__title {
+        .el-sub-menu__icon-arrow {
+          display: none;
+        }
+      }
+    }
+    
+    .el-tooltip {
+      padding: 0 !important;
+      
+      .svg-icon {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.main-container {
+  position: relative;
+  margin-left: 220px;
+  min-height: 100%;
+  transition: margin-left 0.28s;
+  
+  &.is-collapsed {
+    margin-left: 64px;
+  }
+}
+
+// 折叠按钮
+.hamburger-container {
+  padding: 0 15px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.025);
+  }
+  
+  .hamburger {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.38s;
+    
+    &.is-active {
+      transform: rotate(180deg);
+    }
+  }
+} 

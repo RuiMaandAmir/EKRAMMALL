@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="product-info">
+    <swiper class="product-images" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}">
+      <swiper-item wx:for="{{product.images}}" wx:key="id">
+        <image src="{{item}}" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+
+    <view class="basic-info">
+      <view class="price-info">
+        <view class="price">¥{{product.price}}</view>
+        <view class="commission">佣金：¥{{product.commission}}</view>
+      </view>
+      <view class="name">{{product.name}}</view>
+      <view class="sales">销量：{{product.sales}}</view>
+    </view>
+
+    <view class="detail-info">
+      <view class="section">
+        <view class="title">商品详情</view>
+        <rich-text nodes="{{product.description}}"></rich-text>
+      </view>
+
+      <view class="section">
+        <view class="title">佣金说明</view>
+        <view class="commission-info">
+          <view class="info-item">
+            <text class="label">佣金比例：</text>
+            <text class="value">{{product.commission_rate}}%</text>
+          </view>
+          <view class="info-item">
+            <text class="label">佣金金额：</text>
+            <text class="value">¥{{product.commission}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">结算周期：</text>
+            <text class="value">订单完成后{{product.settlement_days}}天</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-bar">
+    <view class="share-btn" bindtap="shareProduct">
+      <text>分享商品</text>
+    </view>
+    <view class="buy-btn" bindtap="navigateToBuy">
+      <text>立即购买</text>
+    </view>
+  </view>
+</view> 

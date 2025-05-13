@@ -1,0 +1,140 @@
+<view class="container">
+  <!-- 团队统计 -->
+  <view class="stats-card">
+    <view class="stats-item">
+      <view class="stats-value">{{teamStats.total_members}}</view>
+      <view class="stats-label">团队总人数</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-value">{{teamStats.active_members}}</view>
+      <view class="stats-label">活跃人数</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-value">¥{{teamStats.total_commission}}</view>
+      <view class="stats-label">团队佣金</view>
+    </view>
+  </view>
+
+  <!-- 筛选器 -->
+  <view class="filter-bar">
+    <view class="type-list">
+      <view 
+        class="type-item {{type === 'all' ? 'active' : ''}}" 
+        bindtap="selectType" 
+        data-type="all"
+      >
+        全部成员
+      </view>
+      <view 
+        class="type-item {{type === 'active' ? 'active' : ''}}" 
+        bindtap="selectType" 
+        data-type="active"
+      >
+        活跃成员
+      </view>
+      <view 
+        class="type-item {{type === 'inactive' ? 'active' : ''}}" 
+        bindtap="selectType" 
+        data-type="inactive"
+      >
+        非活跃成员
+      </view>
+    </view>
+    <view class="search-box">
+      <input 
+        class="search-input" 
+        type="text" 
+        placeholder="搜索成员昵称/手机号" 
+        value="{{keyword}}"
+        bindinput="onSearch"
+      />
+    </view>
+  </view>
+
+  <!-- 成员列表 -->
+  <scroll-view 
+    class="member-list" 
+    scroll-y 
+    bindscrolltolower="loadMore"
+    refresher-enabled
+    bindrefresherrefresh="onRefresh"
+  >
+    <view class="member-item" wx:for="{{members}}" wx:key="id">
+      <view class="member-header">
+        <view class="member-info">
+          <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+          <view class="info">
+            <view class="nickname">{{item.nickname}}</view>
+            <view class="phone">{{item.phone}}</view>
+          </view>
+        </view>
+        <view class="member-status {{item.is_active ? 'active' : 'inactive'}}">
+          {{item.is_active ? '活跃' : '非活跃'}}
+        </view>
+      </view>
+      
+      <view class="member-content">
+        <view class="stats">
+          <view class="stat-item">
+            <view class="label">加入时间</view>
+            <view class="value">{{item.join_time}}</view>
+          </view>
+          <view class="stat-item">
+            <view class="label">订单数</view>
+            <view class="value">{{item.order_count}}</view>
+          </view>
+          <view class="stat-item">
+            <view class="label">佣金</view>
+            <view class="value">¥{{item.commission}}</view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="member-footer">
+        <button class="btn" bindtap="viewMemberDetail" data-id="{{item.id}}">查看详情</button>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <view class="loading-icon"></view>
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && members.length === 0}}">
+      <image class="empty-icon" src="/images/empty-team.png" mode="aspectFit"></image>
+      <view class="empty-text">暂无团队成员</view>
+      <view class="empty-tips">快去邀请好友加入团队吧</view>
+    </view>
+
+    <!-- 没有更多数据 -->
+    <view class="no-more" wx:if="{{!loading && !hasMore}}">
+      <text>没有更多数据了</text>
+    </view>
+  </scroll-view>
+
+  <!-- 邀请按钮 -->
+  <view class="invite-bar">
+    <button class="invite-btn" bindtap="showInviteDialog">邀请好友</button>
+  </view>
+
+  <!-- 邀请弹窗 -->
+  <view class="dialog" wx:if="{{showInviteDialog}}">
+    <view class="dialog-content">
+      <view class="dialog-title">邀请好友</view>
+      <view class="dialog-body">
+        <view class="invite-qrcode">
+          <image src="{{inviteQrcode}}" mode="aspectFit"></image>
+        </view>
+        <view class="invite-link">
+          <view class="link-text">{{inviteLink}}</view>
+          <button class="copy-btn" bindtap="copyInviteLink">复制链接</button>
+        </view>
+      </view>
+      <view class="dialog-footer">
+        <button class="btn cancel" bindtap="hideInviteDialog">关闭</button>
+      </view>
+    </view>
+  </view>
+</view> 

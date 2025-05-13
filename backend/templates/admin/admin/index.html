@@ -1,0 +1,147 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    margin: 0 0 10px;
+    color: #2c3e50;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.quick-actions {
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quick-actions h2 {
+    margin: 0 0 15px;
+    color: #2c3e50;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.action-button:hover {
+    background: #2980b9;
+}
+</style>
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>总订单数</h3>
+            <div class="stat-value">{{ total_orders }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>总用户数</h3>
+            <div class="stat-value">{{ total_users }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>分销商数量</h3>
+            <div class="stat-value">{{ total_distributors }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>今日销售额</h3>
+            <div class="stat-value">¥{{ today_sales }}</div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <h2>快捷操作</h2>
+        <div class="action-buttons">
+            <a href="{% url 'admin:products_product_add' %}" class="action-button">添加商品</a>
+            <a href="{% url 'admin:orders_order_changelist' %}" class="action-button">订单管理</a>
+            <a href="{% url 'admin:accounts_withdrawalrecord_changelist' %}" class="action-button">提现管理</a>
+            <a href="{% url 'admin:accounts_commissionrecord_changelist' %}" class="action-button">佣金管理</a>
+        </div>
+    </div>
+
+    {% if app_list %}
+    <div class="app-list">
+        {% for app in app_list %}
+            <div class="app-{{ app.app_label }} module">
+                <table>
+                    <caption>
+                        <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">{{ app.name }}</a>
+                    </caption>
+                    {% for model in app.models %}
+                        <tr class="model-{{ model.object_name|lower }}">
+                            {% if model.admin_url %}
+                                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                            {% else %}
+                                <th scope="row">{{ model.name }}</th>
+                            {% endif %}
+
+                            {% if model.add_url %}
+                                <td><a href="{{ model.add_url }}" class="addlink">{% translate 'Add' %}</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+
+                            {% if model.admin_url and show_changelinks %}
+                                {% if model.view_only %}
+                                    <td><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></td>
+                                {% else %}
+                                    <td><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></td>
+                                {% endif %}
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>{% translate 'You don't have permission to view or edit anything.' %}</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %} 

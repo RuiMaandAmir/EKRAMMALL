@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索商品名称" bindinput="onSearch" value="{{searchKeyword}}"/>
+    <view class="search-btn" bindtap="search">搜索</view>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item {{currentSort === 'commission' ? 'active' : ''}}" bindtap="setSort" data-sort="commission">
+      <text>佣金最高</text>
+    </view>
+    <view class="filter-item {{currentSort === 'sales' ? 'active' : ''}}" bindtap="setSort" data-sort="sales">
+      <text>销量最高</text>
+    </view>
+    <view class="filter-item {{currentSort === 'price' ? 'active' : ''}}" bindtap="setSort" data-sort="price">
+      <text>价格最低</text>
+    </view>
+  </view>
+
+  <view class="product-list">
+    <view class="product-item" wx:for="{{products}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <image class="product-image" src="{{item.image}}" mode="aspectFill"></image>
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-price">
+          <text class="price">¥{{item.price}}</text>
+          <text class="commission">佣金：¥{{item.commission}}</text>
+        </view>
+        <view class="product-stats">
+          <text class="sales">销量：{{item.sales}}</text>
+          <text class="commission-rate">佣金比例：{{item.commission_rate}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore}}">
+    <text>没有更多商品了</text>
+  </view>
+</view> 

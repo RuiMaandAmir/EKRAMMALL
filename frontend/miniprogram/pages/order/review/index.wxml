@@ -1,0 +1,74 @@
+<view class="container">
+  <view class="order-info">
+    <view class="title">订单信息</view>
+    <view class="content">
+      <view class="order-number">订单号：{{order.order_number}}</view>
+      <view class="amount">订单金额：¥{{order.payment_amount}}</view>
+    </view>
+  </view>
+
+  <view class="product-list">
+    <view class="product-item" wx:for="{{order.items}}" wx:key="id">
+      <image class="product-image" src="{{item.product.image}}" mode="aspectFill"></image>
+      <view class="product-info">
+        <view class="product-name">{{item.product.name}}</view>
+        <view class="product-spec" wx:if="{{item.variant}}">
+          {{item.variant.name}}
+        </view>
+        <view class="product-price">¥{{item.price}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="review-section">
+    <view class="title">商品评价</view>
+    <view class="review-item" wx:for="{{order.items}}" wx:key="id">
+      <view class="product-header">
+        <image class="product-image" src="{{item.product.image}}" mode="aspectFill"></image>
+        <view class="product-name">{{item.product.name}}</view>
+      </view>
+      
+      <view class="rating-section">
+        <view class="rating-title">商品评分</view>
+        <view class="rating-stars">
+          <view 
+            class="star {{index < rating[item.id] ? 'active' : ''}}" 
+            wx:for="{{5}}" 
+            wx:key="index"
+            bindtap="selectRating" 
+            data-item-id="{{item.id}}" 
+            data-rating="{{index + 1}}"
+          >★</view>
+        </view>
+      </view>
+
+      <view class="review-content">
+        <textarea 
+          class="review-text" 
+          placeholder="请输入评价内容（选填）" 
+          maxlength="500" 
+          bindinput="inputReview" 
+          data-item-id="{{item.id}}"
+        ></textarea>
+      </view>
+
+      <view class="upload-section">
+        <view class="upload-list">
+          <view class="upload-item" wx:for="{{images[item.id]}}" wx:key="index">
+            <image class="preview" src="{{item}}" mode="aspectFill"></image>
+            <view class="delete" bindtap="deleteImage" data-item-id="{{item.id}}" data-index="{{index}}">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" data-item-id="{{item.id}}" wx:if="{{images[item.id].length < 9}}">
+            <text class="icon">+</text>
+            <text class="text">上传图片</text>
+          </view>
+        </view>
+        <view class="upload-tip">最多上传9张图片，支持jpg、png格式</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="action">
+    <button class="submit-btn" type="primary" bindtap="submitReview">提交评价</button>
+  </view>
+</view> 

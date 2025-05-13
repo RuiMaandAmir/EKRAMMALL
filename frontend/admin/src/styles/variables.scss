@@ -1,0 +1,71 @@
+// 伊客拉穆商城管理后台主题变量
+
+// 主题颜色
+$--color-primary: #4caf50;
+$--color-success: #67c23a;
+$--color-warning: #e6a23c;
+$--color-danger: #f56c6c;
+$--color-info: #909399;
+
+// 浅绿色系列
+$--color-primary-light-1: mix(white, $--color-primary, 10%);
+$--color-primary-light-2: mix(white, $--color-primary, 20%);
+$--color-primary-light-3: mix(white, $--color-primary, 30%);
+$--color-primary-light-4: mix(white, $--color-primary, 40%);
+$--color-primary-light-5: mix(white, $--color-primary, 50%);
+$--color-primary-light-6: mix(white, $--color-primary, 60%);
+$--color-primary-light-7: mix(white, $--color-primary, 70%);
+$--color-primary-light-8: mix(white, $--color-primary, 80%);
+$--color-primary-light-9: mix(white, $--color-primary, 90%);
+
+// 深绿色系列
+$--color-primary-dark-1: mix(black, $--color-primary, 10%);
+$--color-primary-dark-2: mix(black, $--color-primary, 20%);
+
+// 背景色
+$--background-color-base: #f5f7fa;
+$--background-color-light: #fafbfc;
+$--background-color-lighter: #ffffff;
+
+// 边框颜色
+$--border-color-base: #dcdfe6;
+$--border-color-light: #e4e7ed;
+$--border-color-lighter: #ebeef5;
+$--border-color-extra-light: #f2f6fc;
+
+// 字体颜色
+$--color-text-primary: #303133;
+$--color-text-regular: #606266;
+$--color-text-secondary: #909399;
+$--color-text-placeholder: #c0c4cc;
+
+// 字体大小
+$--font-size-extra-large: 20px;
+$--font-size-large: 18px;
+$--font-size-medium: 16px;
+$--font-size-base: 14px;
+$--font-size-small: 13px;
+$--font-size-extra-small: 12px;
+
+// 边框圆角
+$--border-radius-base: 4px;
+$--border-radius-small: 2px;
+$--border-radius-circle: 100%;
+$--border-radius-large: 8px;
+
+// 布局相关
+$--sidebar-width: 210px;
+$--sidebar-collapse-width: 54px;
+$--header-height: 60px;
+
+// 导出变量给js使用
+:export {
+  colorPrimary: $--color-primary;
+  colorSuccess: $--color-success;
+  colorWarning: $--color-warning;
+  colorDanger: $--color-danger;
+  colorInfo: $--color-info;
+  sidebarWidth: $--sidebar-width;
+  sidebarCollapseWidth: $--sidebar-collapse-width;
+  headerHeight: $--header-height;
+} 

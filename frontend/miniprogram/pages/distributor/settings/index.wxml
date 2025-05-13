@@ -1,0 +1,97 @@
+<view class="container">
+  <!-- 基本信息 -->
+  <view class="section">
+    <view class="section-title">基本信息</view>
+    <view class="form-item">
+      <view class="label">分销商等级</view>
+      <view class="value">{{distributorInfo.level_name}}</view>
+    </view>
+    <view class="form-item">
+      <view class="label">分销商编号</view>
+      <view class="value">{{distributorInfo.code}}</view>
+    </view>
+    <view class="form-item">
+      <view class="label">加入时间</view>
+      <view class="value">{{distributorInfo.created_at}}</view>
+    </view>
+  </view>
+
+  <!-- 佣金设置 -->
+  <view class="section">
+    <view class="section-title">佣金设置</view>
+    <view class="form-item">
+      <view class="label">默认佣金比例</view>
+      <view class="value">{{distributorInfo.default_commission_rate}}%</view>
+    </view>
+    <view class="form-item">
+      <view class="label">最高佣金比例</view>
+      <view class="value">{{distributorInfo.max_commission_rate}}%</view>
+    </view>
+    <view class="form-item">
+      <view class="label">最低提现金额</view>
+      <view class="value">¥{{distributorInfo.min_withdraw_amount}}</view>
+    </view>
+  </view>
+
+  <!-- 推广设置 -->
+  <view class="section">
+    <view class="section-title">推广设置</view>
+    <view class="form-item">
+      <view class="label">推广海报</view>
+      <view class="value">
+        <button class="btn" bindtap="generatePoster">生成推广海报</button>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="label">推广链接</view>
+      <view class="value">
+        <view class="link-box">
+          <text class="link">{{distributorInfo.promotion_link}}</text>
+          <button class="copy-btn" bindtap="copyLink">复制</button>
+        </view>
+      </view>
+    </view>
+    <view class="form-item">
+      <view class="label">推广二维码</view>
+      <view class="value">
+        <image class="qrcode" src="{{distributorInfo.qrcode_url}}" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 其他设置 -->
+  <view class="section">
+    <view class="section-title">其他设置</view>
+    <view class="form-item">
+      <view class="label">消息通知</view>
+      <switch checked="{{settings.notification}}" bindchange="toggleNotification" />
+    </view>
+    <view class="form-item">
+      <view class="label">自动提现</view>
+      <switch checked="{{settings.auto_withdraw}}" bindchange="toggleAutoWithdraw" />
+    </view>
+  </view>
+
+  <!-- 退出分销 -->
+  <view class="section">
+    <view class="section-title">退出分销</view>
+    <view class="form-item">
+      <view class="label">退出分销商</view>
+      <view class="value">
+        <button class="btn danger" bindtap="showQuitDialog">退出分销</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出确认弹窗 -->
+  <view class="dialog" wx:if="{{showQuitDialog}}">
+    <view class="dialog-content">
+      <view class="dialog-title">退出分销确认</view>
+      <view class="dialog-text">退出后将无法继续获得佣金，是否确认退出？</view>
+      <view class="dialog-buttons">
+        <button class="btn cancel" bindtap="hideQuitDialog">取消</button>
+        <button class="btn confirm" bindtap="quitDistributor">确认退出</button>
+      </view>
+    </view>
+  </view>
+</view> 

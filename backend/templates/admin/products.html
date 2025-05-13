@@ -1,0 +1,159 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">产品管理</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+                            添加产品
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>图片</th>
+                                    <th>名称</th>
+                                    <th>价格</th>
+                                    <th>库存</th>
+                                    <th>分销佣金</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                <tr>
+                                    <td>{{ product.id }}</td>
+                                    <td>
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-thumbnail">
+                                    </td>
+                                    <td>{{ product.name }}</td>
+                                    <td>¥{{ product.price }}</td>
+                                    <td>{{ product.stock }}</td>
+                                    <td>{{ product.distribution_commission }}%</td>
+                                    <td>
+                                        <span class="badge badge-{{ product.status|yesno:'success,danger' }}">
+                                            {{ product.status|yesno:'上架,下架' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="editProduct({{ product.id }})">编辑</button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteProduct({{ product.id }})">删除</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加产品模态框 -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加产品</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>产品名称</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>产品描述</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>价格</label>
+                        <input type="number" class="form-control" name="price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>库存</label>
+                        <input type="number" class="form-control" name="stock" required>
+                    </div>
+                    <div class="form-group">
+                        <label>分销佣金比例 (%)</label>
+                        <input type="number" class="form-control" name="distribution_commission" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>产品图片</label>
+                        <input type="file" class="form-control" name="image" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label>状态</label>
+                        <select class="form-control" name="status">
+                            <option value="1">上架</option>
+                            <option value="0">下架</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitProduct()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+function editProduct(id) {
+    // 实现编辑产品功能
+}
+
+function deleteProduct(id) {
+    if (confirm('确定要删除这个产品吗？')) {
+        // 实现删除产品功能
+    }
+}
+
+function submitProduct() {
+    const form = document.getElementById('addProductForm');
+    const formData = new FormData(form);
+    
+    fetch('/api/products/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('添加产品失败：' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('添加产品失败，请重试');
+    });
+}
+</script>
+{% endblock %} 

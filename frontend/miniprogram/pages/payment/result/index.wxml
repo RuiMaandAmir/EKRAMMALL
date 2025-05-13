@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="result {{status === 'success' ? 'success' : 'fail'}}">
+    <image class="icon" src="/images/{{status === 'success' ? 'success' : 'fail'}}.png"></image>
+    <view class="title">{{status === 'success' ? '支付成功' : '支付失败'}}</view>
+    <view class="desc">{{status === 'success' ? '您的订单已支付成功' : '支付过程中出现问题，请重试'}}</view>
+  </view>
+  
+  <view class="order-info">
+    <view class="item">
+      <text class="label">订单号</text>
+      <text class="value">{{order.order_number}}</text>
+    </view>
+    <view class="item">
+      <text class="label">支付金额</text>
+      <text class="value">¥{{order.payment_amount}}</text>
+    </view>
+    <view class="item">
+      <text class="label">支付时间</text>
+      <text class="value">{{order.paid_at}}</text>
+    </view>
+  </view>
+  
+  <view class="action">
+    <button class="btn" type="primary" bindtap="viewOrder">查看订单</button>
+    <button class="btn" bindtap="backToHome">返回首页</button>
+  </view>
+</view> 

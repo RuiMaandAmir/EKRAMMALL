@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico">
+  <title>伊客拉穆商城后台管理系统</title>
+  <meta name="description" content="伊客拉穆商城后台管理系统 - 功能强大的电商管理平台">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    }
+    
+    #app-loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f5f7fa;
+    }
+    
+    .loading-logo {
+      margin-bottom: 20px;
+      width: 80px;
+      height: 80px;
+    }
+    
+    .loading-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4caf50;
+      margin-bottom: 30px;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(76, 175, 80, 0.2);
+      border-top-color: #4caf50;
+      border-radius: 50%;
+      animation: loading-rotate 1s linear infinite;
+    }
+    
+    @keyframes loading-rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="app-loading">
+      <img src="/logo.png" alt="Logo" class="loading-logo">
+      <div class="loading-title">伊客拉穆商城后台管理系统</div>
+      <div class="loading-spinner"></div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html> 

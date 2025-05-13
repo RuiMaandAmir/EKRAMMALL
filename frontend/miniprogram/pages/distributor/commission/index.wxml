@@ -1,0 +1,118 @@
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="stats-card">
+    <view class="stats-item">
+      <view class="stats-label">总佣金</view>
+      <view class="stats-value">¥{{totalCommission}}</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-label">本月佣金</view>
+      <view class="stats-value">¥{{monthlyCommission}}</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-label">待结算</view>
+      <view class="stats-value">¥{{pendingCommission}}</view>
+    </view>
+  </view>
+
+  <!-- 筛选器 -->
+  <view class="filter-bar">
+    <picker mode="date" fields="month" value="{{currentDate}}" bindchange="onDateChange">
+      <view class="date-picker">
+        <text>{{currentDate}}</text>
+        <text class="picker-arrow">></text>
+      </view>
+    </picker>
+    <view class="type-list">
+      <view 
+        class="type-item {{type === 'all' ? 'active' : ''}}" 
+        bindtap="selectType" 
+        data-type="all"
+      >
+        全部
+      </view>
+      <view 
+        class="type-item {{type === 'pending' ? 'active' : ''}}" 
+        bindtap="selectType" 
+        data-type="pending"
+      >
+        待结算
+      </view>
+      <view 
+        class="type-item {{type === 'settled' ? 'active' : ''}}" 
+        bindtap="selectType" 
+        data-type="settled"
+      >
+        已结算
+      </view>
+    </view>
+  </view>
+
+  <!-- 佣金列表 -->
+  <scroll-view 
+    class="commission-list" 
+    scroll-y 
+    bindscrolltolower="loadMore"
+    refresher-enabled
+    bindrefresherrefresh="onRefresh"
+  >
+    <view class="commission-item" wx:for="{{commissions}}" wx:key="id">
+      <view class="commission-header">
+        <view class="order-info">
+          <text class="order-number">订单号：{{item.order_number}}</text>
+          <text class="order-time">{{item.created_at}}</text>
+        </view>
+        <view class="commission-status {{item.status === 'pending' ? 'pending' : 'settled'}}">
+          {{item.status === 'pending' ? '待结算' : '已结算'}}
+        </view>
+      </view>
+      
+      <view class="commission-content">
+        <view class="product-info">
+          <image class="product-image" src="{{item.product_image}}" mode="aspectFill"></image>
+          <view class="product-detail">
+            <view class="product-name">{{item.product_name}}</view>
+            <view class="product-spec">{{item.product_spec}}</view>
+          </view>
+        </view>
+        
+        <view class="commission-info">
+          <view class="info-item">
+            <text class="label">订单金额</text>
+            <text class="value">¥{{item.order_amount}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">佣金比例</text>
+            <text class="value">{{item.commission_rate}}%</text>
+          </view>
+          <view class="info-item">
+            <text class="label">佣金金额</text>
+            <text class="value commission-amount">¥{{item.commission_amount}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="commission-footer" wx:if="{{item.status === 'pending'}}">
+        <view class="settle-time">预计结算时间：{{item.expected_settle_time}}</view>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <view class="loading-icon"></view>
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{!loading && commissions.length === 0}}">
+      <image class="empty-icon" src="/images/empty-commission.png" mode="aspectFit"></image>
+      <view class="empty-text">暂无佣金记录</view>
+      <view class="empty-tips">快去推广商品赚取佣金吧</view>
+    </view>
+
+    <!-- 没有更多数据 -->
+    <view class="no-more" wx:if="{{!loading && !hasMore}}">
+      <text>没有更多数据了</text>
+    </view>
+  </scroll-view>
+</view> 

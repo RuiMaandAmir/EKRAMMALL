@@ -1,0 +1,30 @@
+<view class="container">
+  <!-- 账户列表 -->
+  <view class="account-list">
+    <view class="account-item" wx:for="{{accounts}}" wx:key="id">
+      <view class="account-info">
+        <view class="account-type">{{item.type === 'wechat' ? '微信' : '银行卡'}}</view>
+        <view class="account-number">{{item.number}}</view>
+        <view class="account-bank" wx:if="{{item.type === 'bank'}}">
+          {{item.bank_name}}{{item.branch_name ? ' - ' + item.branch_name : ''}}
+        </view>
+      </view>
+      <view class="account-actions">
+        <button class="btn edit" bindtap="editAccount" data-id="{{item.id}}">编辑</button>
+        <button class="btn delete" bindtap="deleteAccount" data-id="{{item.id}}">删除</button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{accounts.length === 0}}">
+      <image class="empty-icon" src="/images/empty-account.png" mode="aspectFit"></image>
+      <view class="empty-text">暂无提现账户</view>
+      <view class="empty-tips">请添加提现账户以便提现</view>
+    </view>
+  </view>
+
+  <!-- 添加账户按钮 -->
+  <view class="action-bar">
+    <button class="add-btn" bindtap="addAccount">添加提现账户</button>
+  </view>
+</view> 

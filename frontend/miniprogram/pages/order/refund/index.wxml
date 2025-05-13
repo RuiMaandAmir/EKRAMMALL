@@ -1,0 +1,89 @@
+<view class="container">
+  <view class="order-info">
+    <view class="title">订单信息</view>
+    <view class="content">
+      <view class="order-number">订单号：{{order.order_number}}</view>
+      <view class="amount">订单金额：¥{{order.payment_amount}}</view>
+    </view>
+  </view>
+
+  <view class="refund-type">
+    <view class="title">退款类型</view>
+    <view class="type-list">
+      <view 
+        class="type-item {{refundType === 'refund' ? 'active' : ''}}" 
+        bindtap="selectRefundType" 
+        data-type="refund"
+      >仅退款</view>
+      <view 
+        class="type-item {{refundType === 'return' ? 'active' : ''}}" 
+        bindtap="selectRefundType" 
+        data-type="return"
+      >退货退款</view>
+    </view>
+  </view>
+
+  <view class="refund-reason">
+    <view class="title">退款原因</view>
+    <view class="reason-list">
+      <view 
+        class="reason-item {{reason === item.value ? 'active' : ''}}" 
+        wx:for="{{reasonList}}" 
+        wx:key="value"
+        bindtap="selectReason" 
+        data-reason="{{item.value}}"
+      >{{item.label}}</view>
+    </view>
+    <view class="custom-reason" wx:if="{{reason === 'other'}}">
+      <textarea 
+        class="reason-input" 
+        placeholder="请输入其他原因" 
+        maxlength="200" 
+        bindinput="inputCustomReason"
+      ></textarea>
+    </view>
+  </view>
+
+  <view class="refund-amount">
+    <view class="title">退款金额</view>
+    <view class="amount-input">
+      <text class="symbol">¥</text>
+      <input 
+        type="digit" 
+        value="{{amount}}" 
+        placeholder="请输入退款金额" 
+        bindinput="inputAmount"
+      />
+    </view>
+    <view class="amount-tip">最多可退¥{{order.payment_amount}}</view>
+  </view>
+
+  <view class="refund-desc">
+    <view class="title">退款说明</view>
+    <textarea 
+      class="desc-input" 
+      placeholder="请输入退款说明（选填）" 
+      maxlength="500" 
+      bindinput="inputDesc"
+    ></textarea>
+  </view>
+
+  <view class="upload-section">
+    <view class="title">上传凭证</view>
+    <view class="upload-list">
+      <view class="upload-item" wx:for="{{images}}" wx:key="index">
+        <image class="preview" src="{{item}}" mode="aspectFill"></image>
+        <view class="delete" bindtap="deleteImage" data-index="{{index}}">×</view>
+      </view>
+      <view class="upload-btn" bindtap="chooseImage" wx:if="{{images.length < 9}}">
+        <text class="icon">+</text>
+        <text class="text">上传图片</text>
+      </view>
+    </view>
+    <view class="upload-tip">最多上传9张图片，支持jpg、png格式</view>
+  </view>
+
+  <view class="action">
+    <button class="submit-btn" type="primary" bindtap="submitRefund">提交申请</button>
+  </view>
+</view> 

@@ -1,0 +1,82 @@
+<view class="container">
+  <!-- 个人业绩 -->
+  <view class="section">
+    <view class="section-title">个人业绩</view>
+    <view class="stats-grid">
+      <view class="stats-item">
+        <text class="stats-value">¥{{personalStats.total_commission}}</text>
+        <text class="stats-label">总佣金</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">¥{{personalStats.available_commission}}</text>
+        <text class="stats-label">可用佣金</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{personalStats.total_orders}}</text>
+        <text class="stats-label">订单数</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{personalStats.total_customers}}</text>
+        <text class="stats-label">客户数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 团队数据 -->
+  <view class="section">
+    <view class="section-title">团队数据</view>
+    <view class="team-stats">
+      <view class="team-level">
+        <text class="level-title">一级分销商</text>
+        <view class="team-list">
+          <view class="team-member" wx:for="{{teamData.first_level}}" wx:key="user__username">
+            <text class="member-name">{{item.user__username}}</text>
+            <text class="member-stats">佣金: ¥{{item.total_earnings}} 订单: {{item.total_orders}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="team-level">
+        <text class="level-title">二级分销商</text>
+        <view class="team-list">
+          <view class="team-member" wx:for="{{teamData.second_level}}" wx:key="user__username">
+            <text class="member-name">{{item.user__username}}</text>
+            <text class="member-stats">佣金: ¥{{item.total_earnings}} 订单: {{item.total_orders}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推广数据 -->
+  <view class="section">
+    <view class="section-title">推广数据</view>
+    <view class="promotion-stats">
+      <view class="promotion-item">
+        <text class="promotion-value">{{promotionData.total_clicks}}</text>
+        <text class="promotion-label">总点击量</text>
+      </view>
+      <view class="promotion-item">
+        <text class="promotion-value">{{promotionData.total_orders}}</text>
+        <text class="promotion-label">订单数</text>
+      </view>
+      <view class="promotion-item">
+        <text class="promotion-value">{{promotionData.conversion_rate}}%</text>
+        <text class="promotion-label">转化率</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收益明细 -->
+  <view class="section">
+    <view class="section-title">收益明细</view>
+    <view class="commission-list">
+      <view class="commission-item" wx:for="{{recentCommissions}}" wx:key="id">
+        <view class="commission-info">
+          <text class="commission-amount">+¥{{item.amount}}</text>
+          <text class="commission-time">{{item.created_at}}</text>
+        </view>
+        <text class="commission-remark">{{item.remark}}</text>
+      </view>
+    </view>
+  </view>
+</view> 

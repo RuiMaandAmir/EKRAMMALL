@@ -1,0 +1,324 @@
+/**app.wxss**/
+page {
+  --primary-color: #ff6a3c;
+  --secondary-color: #ff9a3c;
+  --text-color: #333333;
+  --text-color-light: #666666;
+  --text-color-lighter: #999999;
+  --background-color: #f5f5f5;
+  --border-color: #eeeeee;
+  --success-color: #67c23a;
+  --warning-color: #e6a23c;
+  --danger-color: #f56c6c;
+  --info-color: #909399;
+  
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+}
+
+/* 清除浮动 */
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* 文本截断 */
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 按钮样式 */
+.btn {
+  display: inline-block;
+  padding: 20rpx 40rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 1;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2rpx solid var(--primary-color);
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx 0 rgba(0, 0, 0, 0.05);
+}
+
+/* 价格样式 */
+.price {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.price-original {
+  color: var(--text-color-lighter);
+  text-decoration: line-through;
+  font-size: 24rpx;
+  margin-left: 10rpx;
+}
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+
+.tag-primary {
+  background-color: rgba(255, 106, 60, 0.1);
+  color: var(--primary-color);
+}
+
+.tag-success {
+  background-color: rgba(103, 194, 58, 0.1);
+  color: var(--success-color);
+}
+
+.tag-warning {
+  background-color: rgba(230, 162, 60, 0.1);
+  color: var(--warning-color);
+}
+
+.tag-danger {
+  background-color: rgba(245, 108, 108, 0.1);
+  color: var(--danger-color);
+}
+
+/* 弹性布局 */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* 边距 */
+.mt-10 {
+  margin-top: 10rpx;
+}
+
+.mt-20 {
+  margin-top: 20rpx;
+}
+
+.mt-30 {
+  margin-top: 30rpx;
+}
+
+.mb-10 {
+  margin-bottom: 10rpx;
+}
+
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+
+.mb-30 {
+  margin-bottom: 30rpx;
+}
+
+.ml-10 {
+  margin-left: 10rpx;
+}
+
+.ml-20 {
+  margin-left: 20rpx;
+}
+
+.mr-10 {
+  margin-right: 10rpx;
+}
+
+.mr-20 {
+  margin-right: 20rpx;
+}
+
+.p-20 {
+  padding: 20rpx;
+}
+
+.p-30 {
+  padding: 30rpx;
+}
+
+/* 边框 */
+.border-bottom {
+  border-bottom: 2rpx solid var(--border-color);
+}
+
+.border-top {
+  border-top: 2rpx solid var(--border-color);
+}
+
+/* 文本颜色 */
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-secondary {
+  color: var(--secondary-color);
+}
+
+.text-light {
+  color: var(--text-color-light);
+}
+
+.text-lighter {
+  color: var(--text-color-lighter);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-warning {
+  color: var(--warning-color);
+}
+
+.text-danger {
+  color: var(--danger-color);
+}
+
+.text-info {
+  color: var(--info-color);
+}
+
+/* 文本对齐 */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* 字体大小 */
+.font-small {
+  font-size: 24rpx;
+}
+
+.font-medium {
+  font-size: 28rpx;
+}
+
+.font-large {
+  font-size: 32rpx;
+}
+
+.font-xlarge {
+  font-size: 36rpx;
+}
+
+.font-xxlarge {
+  font-size: 40rpx;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+/* 空状态样式 */
+.empty-state {
+  padding: 60rpx 0;
+  text-align: center;
+  color: var(--text-color-lighter);
+}
+
+.empty-state-icon {
+  width: 128rpx;
+  height: 128rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-state-text {
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+/* 加载状态样式 */
+.loading {
+  text-align: center;
+  padding: 30rpx 0;
+  color: var(--text-color-lighter);
+  font-size: 24rpx;
+}
+
+.loading-icon {
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10rpx;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} 

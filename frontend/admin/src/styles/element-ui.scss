@@ -1,0 +1,172 @@
+// Element UI 定制样式
+@use 'sass:math';
+@import './variables.scss';
+
+/* 改变主题色变量 */
+:root {
+  --el-color-primary: #{$--color-primary};
+  --el-color-success: #{$--color-success};
+  --el-color-warning: #{$--color-warning};
+  --el-color-danger: #{$--color-danger};
+  --el-color-info: #{$--color-info};
+}
+
+// 菜单样式定制
+.el-menu {
+  border-right: none !important;
+}
+
+.el-menu-item {
+  &.is-active {
+    background-color: $--color-primary-light-8 !important;
+    color: $--color-primary !important;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background-color: $--color-primary;
+    }
+  }
+}
+
+.el-submenu {
+  &.is-active {
+    > .el-submenu__title {
+      color: $--color-primary-dark-2 !important;
+    }
+  }
+}
+
+// 按钮样式定制
+.el-button--primary {
+  --el-button-hover-bg-color: #{$--color-primary-dark-1};
+  --el-button-active-bg-color: #{$--color-primary-dark-2};
+}
+
+.el-button--success {
+  --el-button-hover-bg-color: #{mix(black, $--color-success, 10%)};
+  --el-button-active-bg-color: #{mix(black, $--color-success, 20%)};
+}
+
+// 自定义圆角按钮
+.el-button--round {
+  border-radius: 20px;
+}
+
+// 分页样式
+.el-pagination {
+  margin-top: 20px;
+  justify-content: flex-end;
+  .el-pagination__total {
+    margin-right: 10px;
+  }
+}
+
+// 卡片样式
+.el-card {
+  border-radius: 8px;
+  margin-bottom: 20px;
+  .el-card__header {
+    padding: 15px 20px;
+  }
+}
+
+// 表格样式
+.el-table {
+  th.el-table__cell {
+    background-color: $--color-primary-light-9;
+    color: $--color-primary-dark-2;
+    font-weight: bold;
+  }
+  
+  .el-table__row {
+    &:hover > td.el-table__cell {
+      background-color: $--color-primary-light-9;
+    }
+  }
+}
+
+// 表单样式
+.el-form-item__label {
+  font-weight: 500;
+}
+
+// Tag样式
+.el-tag--primary {
+  --el-tag-bg-color: #{$--color-primary-light-9};
+  --el-tag-border-color: #{$--color-primary-light-7};
+  --el-tag-text-color: #{$--color-primary};
+}
+
+// Dialog样式
+.el-dialog {
+  border-radius: 8px;
+  overflow: hidden;
+  
+  .el-dialog__header {
+    background-color: $--color-primary-light-9;
+    padding: 15px 20px;
+    margin: 0;
+    border-bottom: 1px solid $--border-color-lighter;
+  }
+  
+  .el-dialog__title {
+    color: $--color-primary-dark-2;
+    font-weight: bold;
+  }
+  
+  .el-dialog__headerbtn {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .el-dialog__body {
+    padding: 30px 20px;
+  }
+}
+
+// 折叠面板
+.el-collapse-item__header {
+  font-weight: bold;
+  &.is-active {
+    color: $--color-primary;
+  }
+}
+
+// 徽章
+.el-badge__content {
+  &.el-badge__content--primary {
+    background-color: $--color-primary;
+  }
+}
+
+// 加载状态
+.el-loading-spinner .path {
+  stroke: $--color-primary;
+}
+
+// 树形控件
+.el-tree-node.is-current > .el-tree-node__content {
+  background-color: $--color-primary-light-8 !important;
+  color: $--color-primary-dark-2;
+}
+
+// 步骤条
+.el-step__title.is-process {
+  color: $--color-primary;
+  font-weight: bold;
+}
+
+.el-step__head.is-process {
+  color: $--color-primary;
+  border-color: $--color-primary;
+}
+
+// 下拉菜单
+.el-dropdown-menu__item:not(.is-disabled):hover {
+  background-color: $--color-primary-light-9;
+  color: $--color-primary;
+} 

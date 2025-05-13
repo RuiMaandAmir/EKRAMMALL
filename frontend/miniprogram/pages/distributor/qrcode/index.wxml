@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="qrcode-card">
+    <view class="title">我的推广二维码</view>
+    <view class="qrcode-container">
+      <image class="qrcode" src="{{qrcodeUrl}}" mode="aspectFit"></image>
+    </view>
+    <view class="tips">
+      <view class="tip-item">1. 长按保存二维码图片</view>
+      <view class="tip-item">2. 分享给好友或朋友圈</view>
+      <view class="tip-item">3. 好友扫码后成为您的客户</view>
+      <view class="tip-item">4. 客户下单您可获得佣金</view>
+    </view>
+  </view>
+
+  <view class="share-card">
+    <view class="title">推广链接</view>
+    <view class="link-container">
+      <text class="link">{{shareLink}}</text>
+      <view class="copy-btn" bindtap="copyLink">复制</view>
+    </view>
+  </view>
+
+  <view class="stats-card">
+    <view class="title">推广数据</view>
+    <view class="stats">
+      <view class="stat-item">
+        <text class="value">{{customerCount}}</text>
+        <text class="label">客户数</text>
+      </view>
+      <view class="stat-item">
+        <text class="value">{{orderCount}}</text>
+        <text class="label">订单数</text>
+      </view>
+      <view class="stat-item">
+        <text class="value">¥{{totalCommission}}</text>
+        <text class="label">总佣金</text>
+      </view>
+    </view>
+  </view>
+</view> 

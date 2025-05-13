@@ -1,0 +1,113 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .stat-card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+    .stat-card:hover {
+        transform: translateY(-2px);
+    }
+    .stat-card h3 {
+        color: #666;
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+    }
+    .stat-card .value {
+        color: #4CAF50;
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .action-card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.2s;
+    }
+    .action-card:hover {
+        background: #4CAF50;
+        color: #fff;
+    }
+    .action-card i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .recent-activities {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .activity-item {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+    }
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+    .activity-time {
+        color: #666;
+        font-size: 0.8rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-stats">
+    {% for stat in stats %}
+    <div class="stat-card">
+        <h3>{{ stat.0 }}</h3>
+        <div class="value">{{ stat.1 }}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="quick-actions">
+    <a href="{% url 'admin:orders_order_add' %}" class="action-card">
+        <i class="fas fa-plus"></i>
+        <div>新建订单</div>
+    </a>
+    <a href="{% url 'admin:products_product_add' %}" class="action-card">
+        <i class="fas fa-box"></i>
+        <div>添加商品</div>
+    </a>
+    <a href="{% url 'admin:accounts_distributorprofile_add' %}" class="action-card">
+        <i class="fas fa-user-plus"></i>
+        <div>添加分销商</div>
+    </a>
+    <a href="{% url 'admin:dashboard_advertisement_add' %}" class="action-card">
+        <i class="fas fa-ad"></i>
+        <div>添加广告</div>
+    </a>
+</div>
+
+<div class="recent-activities">
+    <h2>最近活动</h2>
+    {% for activity in recent_activities %}
+    <div class="activity-item">
+        <div class="activity-content">{{ activity.content }}</div>
+        <div class="activity-time">{{ activity.created_at|date:"Y-m-d H:i" }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 

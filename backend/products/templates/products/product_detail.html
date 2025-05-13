@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} - EKRAM商城{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-wrap -mx-4">
+        <!-- 产品图片 -->
+        <div class="w-full md:w-1/2 px-4">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="relative">
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-auto">
+                    {% if product.original_price %}
+                    <div class="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-bl-lg">
+                        优惠 {{ product.original_price|floatformat:2 }}元
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <div class="flex space-x-2 overflow-x-auto">
+                        {% for image in product.images.all %}
+                        <img src="{{ image.image.url }}" alt="{{ product.name }}" class="w-20 h-20 object-cover rounded cursor-pointer">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 产品信息 -->
+        <div class="w-full md:w-1/2 px-4">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h1 class="text-2xl font-bold mb-4">{{ product.name }}</h1>
+                
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-red-500">¥{{ product.price }}</span>
+                    {% if product.original_price %}
+                    <span class="text-gray-500 line-through ml-2">¥{{ product.original_price }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <h2 class="text-lg font-semibold mb-2">商品描述</h2>
+                    <p class="text-gray-600">{{ product.description }}</p>
+                </div>
+
+                <!-- 分销信息 -->
+                {% if product.allow_distribution %}
+                <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                    <h2 class="text-lg font-semibold mb-2">分销信息</h2>
+                    <p class="text-gray-600">
+                        一级佣金：{{ product.commission_rate|floatformat:1 }}%<br>
+                        二级佣金：{{ product.secondary_commission_rate|floatformat:1 }}%
+                    </p>
+                </div>
+                {% endif %}
+
+                <!-- 分销链接生成 -->
+                {% if user.is_authenticated and user.is_distributor %}
+                <div class="mb-4">
+                    <button id="generateLink" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                        生成分销链接
+                    </button>
+                    <div id="distributionLink" class="mt-2 hidden">
+                        <input type="text" readonly class="w-full p-2 border rounded" id="linkInput">
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" onclick="copyLink()">
+                            复制链接
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 购买按钮 -->
+                <div class="flex space-x-4">
+                    <button class="flex-1 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600">
+                        立即购买
+                    </button>
+                    <button class="flex-1 bg-gray-500 text-white py-3 px-6 rounded-lg hover:bg-gray-600">
+                        加入购物车
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user.is_authenticated and user.is_distributor %}
+<script>
+document.getElementById('generateLink').addEventListener('click', function() {
+    fetch(`/products/${product.id}/generate-distribution-link/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            document.getElementById('distributionLink').classList.remove('hidden');
+            document.getElementById('linkInput').value = window.location.origin + data.link;
+        } else {
+            alert(data.message);
+        }
+    });
+});
+
+function copyLink() {
+    const linkInput = document.getElementById('linkInput');
+    linkInput.select();
+    document.execCommand('copy');
+    alert('链接已复制到剪贴板');
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endif %}
+{% endblock %} 

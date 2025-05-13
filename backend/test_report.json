@@ -1,0 +1,22 @@
+{
+    "user_registration": "test_user_registration",
+    "user_login": "test_user_login",
+    "category_list": "test_category_list",
+    "product_detail": "test_product_detail",
+    "order_creation": "test_order_creation",
+    "distribution_link_generation": "test_distribution_link_generation",
+    "data_point_creation": "test_data_point_creation",
+    "report_creation": "test_report_creation",
+    "dashboard_creation": "test_dashboard_creation",
+    "alert_creation": "test_alert_creation",
+    "user_behavior_creation": "test_user_behavior_creation",
+    "sales_analytics_creation": "test_sales_analytics_creation",
+    "user_analytics_creation": "test_user_analytics_creation",
+    "product_analytics_creation": "test_product_analytics_creation",
+    "user_permission": "test_user_permission",
+    "admin_permission": "test_admin_permission",
+    "product_permission": "test_product_permission",
+    "order_permission": "test_order_permission",
+    "distribution_permission": "test_distribution_permission",
+    "analytics_permission": "test_analytics_permission"
+}

@@ -1,0 +1,86 @@
+<view class="container">
+  <!-- 时间选择 -->
+  <view class="date-picker">
+    <picker mode="date" fields="month" value="{{currentDate}}" start="2020-01" end="{{maxDate}}" bindchange="onDateChange">
+      <view class="date-item">
+        <text>{{currentDate}}</text>
+        <text class="iconfont icon-calendar"></text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stats-card">
+    <view class="stats-item">
+      <view class="value">¥{{totalCommission}}</view>
+      <view class="label">累计佣金</view>
+    </view>
+    <view class="stats-item">
+      <view class="value">¥{{monthCommission}}</view>
+      <view class="label">本月佣金</view>
+    </view>
+    <view class="stats-item">
+      <view class="value">{{totalOrders}}</view>
+      <view class="label">总订单数</view>
+    </view>
+  </view>
+
+  <!-- 趋势图 -->
+  <view class="chart-card">
+    <view class="card-header">
+      <view class="title">佣金趋势</view>
+      <view class="tabs">
+        <view class="tab {{chartType === 'day' ? 'active' : ''}}" bindtap="switchChartType" data-type="day">日</view>
+        <view class="tab {{chartType === 'week' ? 'active' : ''}}" bindtap="switchChartType" data-type="week">周</view>
+        <view class="tab {{chartType === 'month' ? 'active' : ''}}" bindtap="switchChartType" data-type="month">月</view>
+      </view>
+    </view>
+    <view class="chart-container">
+      <canvas canvas-id="commissionChart" class="chart"></canvas>
+    </view>
+  </view>
+
+  <!-- 排行榜 -->
+  <view class="rank-card">
+    <view class="card-header">
+      <view class="title">分销排行榜</view>
+      <view class="subtitle">本月</view>
+    </view>
+    <view class="rank-list">
+      <view class="rank-item" wx:for="{{rankList}}" wx:key="id">
+        <view class="rank-number {{index < 3 ? 'top' : ''}}">{{index + 1}}</view>
+        <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+        <view class="user-info">
+          <view class="nickname">{{item.nickname}}</view>
+          <view class="level">Lv.{{item.level}}</view>
+        </view>
+        <view class="commission">¥{{item.commission}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据详情 -->
+  <view class="detail-card">
+    <view class="card-header">
+      <view class="title">数据详情</view>
+    </view>
+    <view class="detail-list">
+      <view class="detail-item">
+        <view class="label">订单转化率</view>
+        <view class="value">{{conversionRate}}%</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">平均客单价</view>
+        <view class="value">¥{{averageOrderAmount}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">平均佣金率</view>
+        <view class="value">{{averageCommissionRate}}%</view>
+      </view>
+      <view class="detail-item">
+        <view class="label">活跃用户数</view>
+        <view class="value">{{activeUsers}}</view>
+      </view>
+    </view>
+  </view>
+</view> 

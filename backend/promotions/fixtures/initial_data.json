@@ -1,0 +1,84 @@
+[
+    {
+        "model": "promotions.distributionlevel",
+        "pk": 1,
+        "fields": {
+            "name": "普通分销商",
+            "level": 1,
+            "min_team_size": 0,
+            "min_sales": "0.00",
+            "commission_rate": "0.10",
+            "second_level_rate": "0.05",
+            "benefits": "基础分销权益",
+            "is_active": true,
+            "min_orders": 0,
+            "min_commission": "0.00",
+            "upgrade_bonus": "0.00",
+            "icon": "level-1",
+            "color": "#808080",
+            "description": "基础分销商等级",
+            "privileges": {
+                "can_share": true,
+                "can_withdraw": true
+            },
+            "created_at": "2024-05-09T12:00:00Z",
+            "updated_at": "2024-05-09T12:00:00Z"
+        }
+    },
+    {
+        "model": "promotions.distributionlevel",
+        "pk": 2,
+        "fields": {
+            "name": "高级分销商",
+            "level": 2,
+            "min_team_size": 5,
+            "min_sales": "10000.00",
+            "commission_rate": "0.15",
+            "second_level_rate": "0.08",
+            "benefits": "更高佣金比例，团队奖励",
+            "is_active": true,
+            "min_orders": 50,
+            "min_commission": "1000.00",
+            "upgrade_bonus": "100.00",
+            "icon": "level-2",
+            "color": "#FFD700",
+            "description": "高级分销商等级，享受更多权益",
+            "privileges": {
+                "can_share": true,
+                "can_withdraw": true,
+                "team_bonus": true
+            },
+            "created_at": "2024-05-09T12:00:00Z",
+            "updated_at": "2024-05-09T12:00:00Z"
+        }
+    },
+    {
+        "model": "promotions.distributionlevel",
+        "pk": 3,
+        "fields": {
+            "name": "钻石分销商",
+            "level": 3,
+            "min_team_size": 20,
+            "min_sales": "50000.00",
+            "commission_rate": "0.20",
+            "second_level_rate": "0.10",
+            "benefits": "最高佣金比例，专属活动，VIP客服",
+            "is_active": true,
+            "min_orders": 200,
+            "min_commission": "5000.00",
+            "upgrade_bonus": "500.00",
+            "icon": "level-3",
+            "color": "#00BFFF",
+            "description": "最高分销商等级，尊享顶级权益",
+            "privileges": {
+                "can_share": true,
+                "can_withdraw": true,
+                "team_bonus": true,
+                "vip_support": true,
+                "exclusive_events": true
+            },
+            "created_at": "2024-05-09T12:00:00Z",
+            "updated_at": "2024-05-09T12:00:00Z"
+        }
+    }
+] 

@@ -1,0 +1,92 @@
+<view class="container">
+  <view class="header">
+    <view class="user-info">
+      <image class="avatar" src="{{user.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="info">
+        <view class="nickname">{{user.nickname}}</view>
+        <view class="level">
+          <text class="label">当前等级：</text>
+          <text class="value">{{level.name}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="stats">
+      <view class="stat-item">
+        <view class="value">¥{{stats.today_commission}}</view>
+        <view class="label">今日佣金</view>
+      </view>
+      <view class="stat-item">
+        <view class="value">¥{{stats.month_commission}}</view>
+        <view class="label">本月佣金</view>
+      </view>
+      <view class="stat-item">
+        <view class="value">{{stats.total_orders}}</view>
+        <view class="label">分销订单</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/distributor/orders/index">
+      <view class="left">
+        <text class="icon">📦</text>
+        <text class="text">分销订单</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/distributor/commission/index">
+      <view class="left">
+        <text class="icon">💰</text>
+        <text class="text">佣金明细</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/distributor/customers/index">
+      <view class="left">
+        <text class="icon">👥</text>
+        <text class="text">我的客户</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/distributor/qrcode/index">
+      <view class="left">
+        <text class="icon">📱</text>
+        <text class="text">推广二维码</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/distributor/settings/index">
+      <view class="left">
+        <text class="icon">⚙️</text>
+        <text class="text">分销设置</text>
+      </view>
+      <text class="arrow">></text>
+    </view>
+  </view>
+
+  <view class="level-info">
+    <view class="title">等级说明</view>
+    <view class="level-list">
+      <view class="level-item" wx:for="{{levels}}" wx:key="id">
+        <view class="level-header">
+          <text class="name">{{item.name}}</text>
+          <text class="condition">累计佣金≥¥{{item.min_commission}}</text>
+        </view>
+        <view class="level-content">
+          <view class="benefit">佣金比例：{{item.commission_rate}}%</view>
+          <view class="benefit">升级奖励：¥{{item.upgrade_bonus}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tips">
+    <view class="title">分销说明</view>
+    <view class="content">
+      <view class="tip-item">1. 分销佣金将在订单完成后结算</view>
+      <view class="tip-item">2. 佣金可提现到微信零钱</view>
+      <view class="tip-item">3. 分销订单需在7天内完成，否则自动取消</view>
+      <view class="tip-item">4. 如有疑问请联系客服</view>
+    </view>
+  </view>
+</view> 

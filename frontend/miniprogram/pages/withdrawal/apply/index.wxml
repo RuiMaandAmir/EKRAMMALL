@@ -1,0 +1,73 @@
+<view class="container">
+  <!-- 可提现金额 -->
+  <view class="balance-card">
+    <text class="label">可提现金额</text>
+    <text class="amount">¥{{availableAmount}}</text>
+  </view>
+
+  <!-- 提现表单 -->
+  <view class="form-container">
+    <view class="form-item">
+      <text class="label">提现金额</text>
+      <input 
+        class="input" 
+        type="digit" 
+        placeholder="请输入提现金额" 
+        value="{{amount}}"
+        bindinput="onAmountInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">开户银行</text>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入开户银行" 
+        value="{{bankName}}"
+        bindinput="onBankNameInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">银行账号</text>
+      <input 
+        class="input" 
+        type="number" 
+        placeholder="请输入银行账号" 
+        value="{{bankAccount}}"
+        bindinput="onBankAccountInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">开户人姓名</text>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入开户人姓名" 
+        value="{{accountHolder}}"
+        bindinput="onAccountHolderInput"
+      />
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tips">
+    <text class="tip-item">单笔提现金额不低于10元</text>
+    <text class="tip-item">每日最多提现3次</text>
+    <text class="tip-item">提现申请将在1-3个工作日内处理</text>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="footer">
+    <button 
+      class="submit-btn" 
+      type="primary" 
+      bindtap="onSubmit"
+      disabled="{{!isFormValid}}"
+    >
+      确认提现
+    </button>
+  </view>
+</view> 

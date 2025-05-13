@@ -1,0 +1,91 @@
+<view class="container">
+  <view class="filter-section">
+    <view class="filter-item {{filter.rating === '' ? 'active' : ''}}" bindtap="selectRating" data-rating="">全部</view>
+    <view class="filter-item {{filter.rating === '5' ? 'active' : ''}}" bindtap="selectRating" data-rating="5">5星</view>
+    <view class="filter-item {{filter.rating === '4' ? 'active' : ''}}" bindtap="selectRating" data-rating="4">4星</view>
+    <view class="filter-item {{filter.rating === '3' ? 'active' : ''}}" bindtap="selectRating" data-rating="3">3星</view>
+    <view class="filter-item {{filter.rating === '2' ? 'active' : ''}}" bindtap="selectRating" data-rating="2">2星</view>
+    <view class="filter-item {{filter.rating === '1' ? 'active' : ''}}" bindtap="selectRating" data-rating="1">1星</view>
+  </view>
+
+  <view class="sort-section">
+    <view class="sort-item {{filter.sort === 'latest' ? 'active' : ''}}" bindtap="selectSort" data-sort="latest">最新</view>
+    <view class="sort-item {{filter.sort === 'helpful' ? 'active' : ''}}" bindtap="selectSort" data-sort="helpful">最有用</view>
+    <view class="sort-item {{filter.sort === 'image' ? 'active' : ''}}" bindtap="selectSort" data-sort="image">有图</view>
+  </view>
+
+  <view class="review-list">
+    <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="user-info">
+        <image class="avatar" src="{{item.user.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="user-detail">
+          <view class="nickname">{{item.user.nickname}}</view>
+          <view class="rating">
+            <view class="stars">
+              <view class="star {{index < item.rating ? 'active' : ''}}" wx:for="{{5}}" wx:key="index">★</view>
+            </view>
+            <view class="time">{{item.created_at}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="review-content">
+        <view class="text">{{item.content}}</view>
+        <view class="image-list" wx:if="{{item.images.length > 0}}">
+          <image 
+            class="image" 
+            wx:for="{{item.images}}" 
+            wx:key="index" 
+            src="{{item}}" 
+            mode="aspectFill"
+            bindtap="previewImage"
+            data-urls="{{item.images}}"
+            data-current="{{item}}"
+          ></image>
+        </view>
+      </view>
+
+      <view class="review-footer">
+        <view class="product-info">
+          <view class="product-name">{{item.product.name}}</view>
+          <view class="product-spec" wx:if="{{item.variant}}">{{item.variant.name}}</view>
+        </view>
+        <view class="actions">
+          <view class="action-item" bindtap="toggleHelpful" data-id="{{item.id}}">
+            <text class="icon {{item.is_helpful ? 'active' : ''}}">👍</text>
+            <text class="count">{{item.helpful_count}}</text>
+          </view>
+          <view class="action-item" bindtap="toggleReply" data-id="{{item.id}}">
+            <text class="icon">💬</text>
+            <text class="count">{{item.reply_count}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="reply-section" wx:if="{{item.show_reply}}">
+        <view class="reply-list">
+          <view class="reply-item" wx:for="{{item.replies}}" wx:key="id">
+            <view class="reply-user">
+              <text class="name">{{item.user.nickname}}</text>
+              <text class="time">{{item.created_at}}</text>
+            </view>
+            <view class="reply-content">{{item.content}}</view>
+          </view>
+        </view>
+        <view class="reply-input">
+          <input 
+            class="input" 
+            placeholder="回复评价" 
+            value="{{item.reply_content}}"
+            bindinput="inputReply"
+            data-id="{{item.id}}"
+          />
+          <button class="send-btn" bindtap="sendReply" data-id="{{item.id}}">发送</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!loading && !hasMore}}">没有更多评价了</view>
+</view> 

@@ -1,0 +1,45 @@
+<view class="container">
+  <!-- 提现统计 -->
+  <view class="stats-card">
+    <view class="stats-item">
+      <text class="label">可提现金额</text>
+      <text class="value">¥{{availableAmount}}</text>
+    </view>
+    <view class="stats-item">
+      <text class="label">累计提现</text>
+      <text class="value">¥{{totalWithdrawn}}</text>
+    </view>
+  </view>
+
+  <!-- 提现记录列表 -->
+  <view class="list-container">
+    <view class="list-header">
+      <text>提现记录</text>
+    </view>
+    
+    <view class="withdrawal-list">
+      <block wx:for="{{withdrawals}}" wx:key="id">
+        <view class="withdrawal-item" bindtap="onItemTap" data-id="{{item.id}}">
+          <view class="item-main">
+            <view class="amount">¥{{item.amount}}</view>
+            <view class="status {{item.status}}">{{item.statusText}}</view>
+          </view>
+          <view class="item-info">
+            <text class="time">{{item.created_at}}</text>
+            <text class="bank">{{item.bank_name}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 无数据提示 -->
+    <view class="empty-tip" wx:if="{{withdrawals.length === 0}}">
+      <text>暂无提现记录</text>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button class="apply-btn" type="primary" bindtap="onApplyTap">申请提现</button>
+  </view>
+</view> 

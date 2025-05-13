@@ -1,0 +1,89 @@
+<view class="container">
+  <!-- 账户列表 -->
+  <view class="account-list">
+    <view class="account-item" wx:for="{{accounts}}" wx:key="id">
+      <view class="account-info">
+        <view class="account-type">{{item.type === 'wechat' ? '微信' : '银行卡'}}</view>
+        <view class="account-detail">
+          <view class="account-name">{{item.name}}</view>
+          <view class="account-number">{{item.number}}</view>
+        </view>
+      </view>
+      <view class="account-actions">
+        <view class="action-btn edit" bindtap="editAccount" data-id="{{item.id}}">编辑</view>
+        <view class="action-btn delete" bindtap="deleteAccount" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加账户按钮 -->
+  <view class="add-account">
+    <button class="btn primary" bindtap="showAddDialog">添加提现账户</button>
+  </view>
+
+  <!-- 添加/编辑账户弹窗 -->
+  <view class="dialog {{showDialog ? 'show' : ''}}">
+    <view class="dialog-content">
+      <view class="dialog-title">{{isEdit ? '编辑账户' : '添加账户'}}</view>
+      <view class="dialog-body">
+        <view class="form">
+          <view class="form-item">
+            <view class="label">账户类型</view>
+            <view class="value">
+              <radio-group bindchange="onTypeChange">
+                <label class="radio">
+                  <radio value="wechat" checked="{{accountType === 'wechat'}}" />微信
+                </label>
+                <label class="radio">
+                  <radio value="bank" checked="{{accountType === 'bank'}}" />银行卡
+                </label>
+              </radio-group>
+            </view>
+          </view>
+
+          <view class="form-item">
+            <view class="label">账户名称</view>
+            <input class="input" type="text" placeholder="请输入账户名称" value="{{accountName}}" bindinput="onNameInput" />
+          </view>
+
+          <view class="form-item">
+            <view class="label">账户号码</view>
+            <input class="input" type="text" placeholder="{{accountType === 'wechat' ? '请输入微信号' : '请输入银行卡号'}}" value="{{accountNumber}}" bindinput="onNumberInput" />
+          </view>
+
+          <block wx:if="{{accountType === 'bank'}}">
+            <view class="form-item">
+              <view class="label">开户银行</view>
+              <input class="input" type="text" placeholder="请输入开户银行" value="{{bankName}}" bindinput="onBankInput" />
+            </view>
+            <view class="form-item">
+              <view class="label">开户支行</view>
+              <input class="input" type="text" placeholder="请输入开户支行" value="{{branchName}}" bindinput="onBranchInput" />
+            </view>
+          </block>
+        </view>
+      </view>
+      <view class="dialog-footer">
+        <button class="btn cancel" bindtap="hideDialog">取消</button>
+        <button class="btn confirm" bindtap="saveAccount">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 删除确认弹窗 -->
+  <view class="dialog {{showDeleteDialog ? 'show' : ''}}">
+    <view class="dialog-content">
+      <view class="dialog-title">删除账户</view>
+      <view class="dialog-body">
+        <view class="warning">确定要删除该提现账户吗？</view>
+        <view class="tips">
+          <view class="tip-item">删除后无法恢复，请谨慎操作</view>
+        </view>
+      </view>
+      <view class="dialog-footer">
+        <button class="btn cancel" bindtap="hideDeleteDialog">取消</button>
+        <button class="btn confirm" bindtap="confirmDelete">确定</button>
+      </view>
+    </view>
+  </view>
+</view> 

@@ -1,0 +1,54 @@
+<view class="container">
+  <view class="balance-card">
+    <view class="balance-title">可提现余额</view>
+    <view class="balance-amount">¥{{balance}}</view>
+    <view class="balance-tips">最低提现金额：¥{{minWithdrawAmount}}</view>
+  </view>
+
+  <view class="form">
+    <view class="form-item">
+      <view class="label">提现金额</view>
+      <view class="input-wrapper">
+        <text class="prefix">¥</text>
+        <input class="input" type="digit" placeholder="请输入提现金额" value="{{amount}}" bindinput="onAmountInput" />
+      </view>
+      <view class="tips">可提现余额：¥{{balance}}</view>
+    </view>
+
+    <view class="form-item">
+      <view class="label">提现账户</view>
+      <picker bindchange="onAccountChange" value="{{accountIndex}}" range="{{accounts}}" range-key="name">
+        <view class="picker">
+          <text wx:if="{{accountIndex === -1}}">请选择提现账户</text>
+          <text wx:else>{{accounts[accountIndex].name}}</text>
+          <text class="picker-arrow">></text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item" wx:if="{{selectedAccount}}">
+      <view class="label">账户信息</view>
+      <view class="account-info">
+        <view class="account-type">{{selectedAccount.type === 'wechat' ? '微信' : '银行卡'}}</view>
+        <view class="account-number">{{selectedAccount.number}}</view>
+        <view class="account-bank" wx:if="{{selectedAccount.type === 'bank'}}">
+          {{selectedAccount.bank_name}}{{selectedAccount.branch_name ? ' - ' + selectedAccount.branch_name : ''}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tips-card">
+    <view class="tips-title">提现说明</view>
+    <view class="tips-content">
+      <view class="tip-item">1. 提现金额必须大于最低提现金额</view>
+      <view class="tip-item">2. 提现手续费：{{withdrawFee}}%</view>
+      <view class="tip-item">3. 提现申请将在1-3个工作日内处理</view>
+      <view class="tip-item">4. 如有疑问请联系客服</view>
+    </view>
+  </view>
+
+  <view class="action-bar">
+    <button class="submit-btn" bindtap="submitWithdraw" disabled="{{!canSubmit}}">申请提现</button>
+  </view>
+</view> 
