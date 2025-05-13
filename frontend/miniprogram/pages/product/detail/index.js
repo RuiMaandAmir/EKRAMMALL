@@ -1,9 +1,13 @@
+// 导入API服务
+const { productApi, cartApi } = require('../../../services/api');
+import util from '../../../utils/util';
+
 const app = getApp()
 
 Page({
   data: {
     product: null,
-    selectedVariant: null,
+    selectedSpec: null,
     quantity: 1,
     loading: true,
     error: null
@@ -15,96 +19,142 @@ Page({
     }
   },
 
-  loadProductDetail: function(productId) {
-    this.setData({ loading: true, error: null })
-    
-    wx.request({
-      url: `${app.globalData.baseUrl}/api/products/${productId}/`,
-      method: 'GET',
-      success: (res) => {
-        if (res.statusCode === 200) {
-          const product = res.data
-          // 如果有变体，选择默认变体
-          const selectedVariant = product.variants && product.variants.length > 0 
-            ? product.variants.find(v => v.is_default) || product.variants[0]
-            : null
-            
-          this.setData({
-            product,
-            selectedVariant,
-            loading: false
-          })
-        } else {
-          this.setData({
-            error: '加载商品信息失败',
-            loading: false
-          })
-        }
-      },
-      fail: () => {
-        this.setData({
-          error: '网络错误，请稍后重试',
-          loading: false
-        })
-      }
-    })
-  },
-
-  selectVariant: function(e) {
-    const variantId = e.currentTarget.dataset.id
-    const variant = this.data.product.variants.find(v => v.id === variantId)
-    if (variant) {
-      this.setData({ selectedVariant: variant })
+  // 加载商品详情
+  async loadProductDetail(id) {
+    try {
+      util.showLoading();
+      const product = await productApi.getProductDetail(id);
+      
+      this.setData({
+        product,
+        selectedSpec: product.specs[0]?.id || null,
+        loading: false
+      });
+    } catch (error) {
+      util.showError('加载失败');
+    } finally {
+      util.hideLoading();
     }
   },
 
-  changeQuantity: function(e) {
-    const type = e.currentTarget.dataset.type
-    let quantity = this.data.quantity
+  // 选择规格
+  onSpecSelect(e) {
+    const { id } = e.currentTarget.dataset;
+    this.setData({ selectedSpec: id });
+  },
+
+  // 修改数量
+  onQuantityChange(e) {
+    const { type } = e.currentTarget.dataset;
+    let { quantity } = this.data;
     
     if (type === 'minus' && quantity > 1) {
-      quantity--
-    } else if (type === 'plus') {
-      quantity++
+      quantity--;
+    } else if (type === 'plus' && quantity < 99) {
+      quantity++;
     }
     
-    this.setData({ quantity })
+    this.setData({ quantity });
   },
 
-  addToCart: function() {
-    if (!this.data.product) return
-    
-    const cartItem = {
-      productId: this.data.product.id,
-      variantId: this.data.selectedVariant?.id,
-      quantity: this.data.quantity,
-      name: this.data.product.name,
-      price: this.data.selectedVariant?.price || this.data.product.price,
-      image: this.data.product.image
-    }
-    
-    app.addToCart(cartItem)
-    wx.showToast({
-      title: '已加入购物车',
-      icon: 'success'
-    })
+  // 输入数量
+  onQuantityInput(e) {
+    let quantity = parseInt(e.detail.value) || 1;
+    quantity = Math.min(Math.max(quantity, 1), 99);
+    this.setData({ quantity });
   },
 
-  buyNow: function() {
-    if (!this.data.product) return
-    
-    const orderItem = {
-      productId: this.data.product.id,
-      variantId: this.data.selectedVariant?.id,
-      quantity: this.data.quantity,
-      name: this.data.product.name,
-      price: this.data.selectedVariant?.price || this.data.product.price,
-      image: this.data.product.image
+  // 加入购物车
+  async onAddToCart() {
+    if (!this.data.selectedSpec) {
+      util.showError('请选择规格');
+      return;
     }
-    
-    app.setTempOrder([orderItem])
+
+    try {
+      util.showLoading();
+      await cartApi.addToCart({
+        product_id: this.data.product.id,
+        spec_id: this.data.selectedSpec,
+        quantity: this.data.quantity
+      });
+
+      util.showSuccess('已加入购物车');
+      
+      // 更新购物车角标
+      this.updateCartBadge();
+    } catch (error) {
+      util.showError('添加失败');
+    } finally {
+      util.hideLoading();
+    }
+  },
+
+  // 立即购买
+  onBuyNow() {
+    if (!this.data.selectedSpec) {
+      util.showError('请选择规格');
+      return;
+    }
+
+    // 将商品信息存储到本地
+    const orderInfo = {
+      product_id: this.data.product.id,
+      spec_id: this.data.selectedSpec,
+      quantity: this.data.quantity
+    };
+    wx.setStorageSync('temp_order', orderInfo);
+
+    // 跳转到订单确认页
     wx.navigateTo({
       url: '/pages/order/confirm/index'
-    })
+    });
+  },
+
+  // 分享
+  onShare() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    });
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    const { product } = this.data;
+    return {
+      title: product.name,
+      path: `/pages/product/detail/index?id=${product.id}`,
+      imageUrl: product.images[0]
+    };
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { product } = this.data;
+    return {
+      title: product.name,
+      query: `id=${product.id}`,
+      imageUrl: product.images[0]
+    };
+  },
+
+  // 更新购物车角标
+  async updateCartBadge() {
+    try {
+      const cartCount = await cartApi.getCartCount();
+      if (cartCount > 0) {
+        wx.setTabBarBadge({
+          index: 2,
+          text: cartCount.toString()
+        });
+      } else {
+        wx.removeTabBarBadge({
+          index: 2
+        });
+      }
+    } catch (error) {
+      console.error('更新购物车角标失败:', error);
+    }
   }
 }) 

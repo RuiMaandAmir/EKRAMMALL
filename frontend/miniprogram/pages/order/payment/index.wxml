@@ -1,0 +1,63 @@
+<!--支付页面-->
+<view class="container">
+  <!-- 支付金额 -->
+  <view class="amount-section">
+    <view class="amount-label">支付金额</view>
+    <view class="amount-value">¥{{amount}}</view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="payment-section">
+    <view class="section-title">选择支付方式</view>
+    <view class="payment-options">
+      <view 
+        class="payment-option" 
+        wx:for="{{paymentMethods}}" 
+        wx:key="id"
+        bindtap="onSelectPayment"
+        data-id="{{item.id}}"
+      >
+        <image class="payment-icon" src="{{item.icon}}" mode="aspectFit" />
+        <view class="payment-name">{{item.name}}</view>
+        <view class="payment-radio {{selectedPayment === item.id ? 'active' : ''}}" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view 
+    class="pay-btn {{!selectedPayment ? 'disabled' : ''}}" 
+    bindtap="onPay"
+  >立即支付</view>
+
+  <!-- 倒计时 -->
+  <view class="countdown" wx:if="{{countdown > 0}}">
+    支付剩余时间：<text class="countdown-text">{{countdownText}}</text>
+  </view>
+
+  <!-- 支付结果 -->
+  <view class="result-section" wx:if="{{showResult}}">
+    <image 
+      class="result-icon" 
+      src="{{paySuccess ? '/images/icons/success.png' : '/images/icons/fail.png'}}" 
+    />
+    <view class="result-text">{{paySuccess ? '支付成功' : '支付失败'}}</view>
+    <view class="result-desc">{{paySuccess ? '您的订单已支付成功' : '请重新尝试支付'}}</view>
+    <view class="action-buttons">
+      <view 
+        class="action-btn primary" 
+        bindtap="onViewOrder"
+        wx:if="{{paySuccess}}"
+      >查看订单</view>
+      <view 
+        class="action-btn secondary" 
+        bindtap="onRetry"
+        wx:if="{{!paySuccess}}"
+      >重新支付</view>
+      <view 
+        class="action-btn secondary" 
+        bindtap="onBackHome"
+      >返回首页</view>
+    </view>
+  </view>
+</view> 

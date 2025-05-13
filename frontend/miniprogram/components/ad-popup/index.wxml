@@ -1,0 +1,7 @@
+ <!-- 广告弹窗组件 -->
+<view class="ad-popup" wx:if="{{visible}}">
+  <view class="ad-content" bindtap="onAdClick">
+    <image src="{{adData.imageUrl}}" mode="aspectFill" />
+    <view class="close-btn" wx:if="{{adData.allowClose}}" catchtap="onClose">×</view>
+  </view>
+</view>

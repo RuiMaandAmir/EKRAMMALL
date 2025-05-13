@@ -1,0 +1,36 @@
+ <!--修改昵称页面-->
+<view class="container">
+  <!-- 输入框区域 -->
+  <view class="input-section">
+    <view class="input-wrapper">
+      <input 
+        class="input" 
+        type="text" 
+        value="{{nickname}}" 
+        placeholder="请输入昵称" 
+        maxlength="20"
+        bindinput="onInput"
+        bindconfirm="saveNickname"
+      />
+      <image 
+        class="clear-btn" 
+        src="/images/icons/clear.png" 
+        bindtap="clearInput" 
+        wx:if="{{nickname}}"
+      />
+    </view>
+  </view>
+
+  <!-- 提示文字 -->
+  <view class="tips">
+    <text>昵称长度为2-20个字符</text>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view 
+    class="save-btn {{nickname ? '' : 'disabled'}}" 
+    bindtap="saveNickname"
+  >
+    保存
+  </view>
+</view>

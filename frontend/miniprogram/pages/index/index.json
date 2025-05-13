@@ -1,0 +1,5 @@
+ {
+    "usingComponents": {
+      "ad-popup": "/components/ad-popup/index"
+    }
+ }

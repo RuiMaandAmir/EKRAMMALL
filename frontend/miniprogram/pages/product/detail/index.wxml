@@ -9,58 +9,75 @@
   </view>
   
   <block wx:elif="{{product}}">
-    <!-- 商品图片轮播 -->
-    <swiper class="product-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="500">
+    <!-- 商品轮播图 -->
+    <swiper class="swiper-container" indicator-dots autoplay circular>
       <swiper-item wx:for="{{product.images}}" wx:key="*this">
-        <image src="{{item}}" mode="aspectFill" class="product-image"></image>
+        <image class="swiper-image" src="{{item}}" mode="aspectFill" />
       </swiper-item>
     </swiper>
     
-    <!-- 商品基本信息 -->
+    <!-- 商品信息 -->
     <view class="product-info">
+      <view class="product-price">{{product.price}}</view>
       <view class="product-name">{{product.name}}</view>
-      <view class="product-price">
-        <text class="current-price">¥{{selectedVariant ? selectedVariant.price : product.price}}</text>
-        <text class="market-price" wx:if="{{product.market_price > 0}}">¥{{product.market_price}}</text>
-      </view>
-      
-      <!-- 商品变体选择 -->
-      <view class="variants" wx:if="{{product.variants && product.variants.length > 0}}">
-        <view class="section-title">规格</view>
-        <view class="variant-list">
-          <view 
-            wx:for="{{product.variants}}" 
-            wx:key="id"
-            class="variant-item {{selectedVariant.id === item.id ? 'selected' : ''}}"
-            bindtap="selectVariant"
-            data-id="{{item.id}}"
-          >
-            {{item.name}}
-          </view>
+      <view class="product-desc">{{product.description}}</view>
+    </view>
+    
+    <!-- 商品规格 -->
+    <view class="spec-section">
+      <view class="section-title">规格选择</view>
+      <view class="spec-list">
+        <view 
+          class="spec-item {{selectedSpec === item.id ? 'active' : ''}}" 
+          wx:for="{{product.specs}}" 
+          wx:key="id"
+          bindtap="onSpecSelect"
+          data-id="{{item.id}}"
+        >
+          {{item.name}}
         </view>
       </view>
-      
-      <!-- 数量选择 -->
+    </view>
+    
+    <!-- 数量选择 -->
+    <view class="spec-section">
+      <view class="section-title">购买数量</view>
       <view class="quantity-selector">
-        <view class="section-title">数量</view>
-        <view class="quantity-control">
-          <view class="quantity-btn" bindtap="changeQuantity" data-type="minus">-</view>
-          <input type="number" value="{{quantity}}" disabled />
-          <view class="quantity-btn" bindtap="changeQuantity" data-type="plus">+</view>
-        </view>
+        <view class="quantity-btn" bindtap="onQuantityChange" data-type="minus">-</view>
+        <input 
+          class="quantity-input" 
+          type="number" 
+          value="{{quantity}}" 
+          bindinput="onQuantityInput"
+        />
+        <view class="quantity-btn" bindtap="onQuantityChange" data-type="plus">+</view>
       </view>
     </view>
     
     <!-- 商品详情 -->
-    <view class="product-detail">
+    <view class="detail-section">
       <view class="section-title">商品详情</view>
-      <rich-text nodes="{{product.description}}"></rich-text>
+      <view class="detail-content">
+        <rich-text nodes="{{product.detail}}"></rich-text>
+        <image 
+          class="detail-image" 
+          wx:for="{{product.detailImages}}" 
+          wx:key="*this" 
+          src="{{item}}" 
+          mode="widthFix" 
+        />
+      </view>
     </view>
     
     <!-- 底部操作栏 -->
-    <view class="bottom-bar">
-      <view class="cart-btn" bindtap="addToCart">加入购物车</view>
-      <view class="buy-btn" bindtap="buyNow">立即购买</view>
+    <view class="action-bar">
+      <view class="action-button add-cart" bindtap="onAddToCart">加入购物车</view>
+      <view class="action-button buy-now" bindtap="onBuyNow">立即购买</view>
+    </view>
+    
+    <!-- 分享按钮 -->
+    <view class="share-button" bindtap="onShare">
+      <image class="share-icon" src="/images/icons/share.png" />
     </view>
   </block>
 </view> 

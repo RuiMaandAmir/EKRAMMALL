@@ -1,0 +1,67 @@
+<!--购物车页面-->
+<view class="container">
+  <!-- 购物车列表 -->
+  <view class="cart-list" wx:if="{{cartItems.length > 0}}">
+    <view class="cart-item" wx:for="{{cartItems}}" wx:key="id">
+      <!-- 选择框 -->
+      <view class="checkbox" bindtap="onItemSelect" data-id="{{item.id}}">
+        <image 
+          class="checkbox-icon" 
+          src="{{item.selected ? '/images/icons/checked.png' : '/images/icons/unchecked.png'}}" 
+        />
+      </view>
+      
+      <!-- 商品信息 -->
+      <view class="item-info">
+        <image class="item-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="item-detail">
+          <view class="item-name">{{item.name}}</view>
+          <view class="item-spec">{{item.spec}}</view>
+          <view class="item-price">{{item.price}}</view>
+        </view>
+      </view>
+      
+      <!-- 数量控制 -->
+      <view class="quantity-control">
+        <view class="quantity-btn" bindtap="onQuantityChange" data-id="{{item.id}}" data-type="minus">-</view>
+        <input 
+          class="quantity-input" 
+          type="number" 
+          value="{{item.quantity}}" 
+          bindinput="onQuantityInput"
+          data-id="{{item.id}}"
+        />
+        <view class="quantity-btn" bindtap="onQuantityChange" data-id="{{item.id}}" data-type="plus">+</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空购物车 -->
+  <view class="empty-cart" wx:else>
+    <image class="empty-icon" src="/images/icons/empty-cart.png" />
+    <view class="empty-text">购物车还是空的</view>
+    <view class="go-shopping" bindtap="onGoShopping">去逛逛</view>
+  </view>
+  
+  <!-- 底部结算栏 -->
+  <view class="settlement-bar" wx:if="{{cartItems.length > 0}}">
+    <view class="select-all" bindtap="onSelectAll">
+      <image 
+        class="checkbox-icon" 
+        src="{{allSelected ? '/images/icons/checked.png' : '/images/icons/unchecked.png'}}" 
+      />
+      <text class="select-all-text">全选</text>
+    </view>
+    
+    <view class="total-info">
+      <view class="total-price">合计：{{totalPrice}}</view>
+    </view>
+    
+    <view 
+      class="settlement-btn {{selectedCount === 0 ? 'disabled' : ''}}" 
+      bindtap="onSettlement"
+    >
+      结算({{selectedCount}})
+    </view>
+  </view>
+</view> 

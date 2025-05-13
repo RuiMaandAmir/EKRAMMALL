@@ -1,0 +1,78 @@
+ <!--地址编辑页面-->
+<view class="container">
+  <view class="form-section">
+    <!-- 收货人 -->
+    <view class="form-item">
+      <text class="form-label">收货人</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入收货人姓名" 
+        placeholder-class="form-input-placeholder"
+        value="{{name}}"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <!-- 手机号码 -->
+    <view class="form-item">
+      <text class="form-label">手机号码</text>
+      <input 
+        class="form-input" 
+        type="number"
+        maxlength="11"
+        placeholder="请输入手机号码" 
+        placeholder-class="form-input-placeholder"
+        value="{{phone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+
+    <!-- 所在地区 -->
+    <view class="form-item">
+      <text class="form-label">所在地区</text>
+      <picker 
+        mode="region" 
+        value="{{region}}" 
+        bindchange="onRegionChange"
+        class="region-picker"
+      >
+        <view class="{{region[0] ? '' : 'region-placeholder'}}">
+          {{region[0] ? region[0] + ' ' + region[1] + ' ' + region[2] : '请选择所在地区'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 详细地址 -->
+    <view class="form-item">
+      <text class="form-label">详细地址</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入详细地址" 
+        placeholder-class="form-input-placeholder"
+        value="{{detail}}"
+        bindinput="onDetailInput"
+      />
+    </view>
+
+    <!-- 设为默认地址 -->
+    <view class="form-item">
+      <text class="form-label">设为默认地址</text>
+      <switch 
+        checked="{{isDefault}}" 
+        bindchange="onDefaultChange"
+        color="#07c160"
+        class="switch"
+      />
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-bar">
+    <view 
+      class="save-btn {{canSave ? '' : 'disabled'}}" 
+      bindtap="saveAddress"
+    >
+      保存
+    </view>
+  </view>
+</view>

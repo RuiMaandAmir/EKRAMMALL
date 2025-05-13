@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/promotions/', include('promotions.urls')),
     path('api/analytics/', include('analytics.urls')),
     path('', RedirectView.as_view(url='/admin/', permanent=True)),
+    path('api/', include('advertisements.urls')),
 ]
 
 # 在开发环境中添加媒体文件的URL

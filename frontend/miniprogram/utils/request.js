@@ -3,141 +3,109 @@
  */
 const app = getApp();
 
+const BASE_URL = 'http://localhost:8000/api'
+
 /**
  * 请求拦截器
  */
-function requestInterceptor(config) {
-  const token = wx.getStorageSync('token');
+const requestInterceptor = (config) => {
+  const token = wx.getStorageSync('token')
   if (token) {
     config.header = {
       ...config.header,
       'Authorization': `Bearer ${token}`
-    };
+    }
   }
-  return config;
+  return config
 }
 
 /**
  * 响应拦截器
  */
-function responseInterceptor(response) {
-  // 请求成功但业务状态码错误
-  if (response.statusCode !== 200) {
-    // 401 未授权，跳转登录页
-    if (response.statusCode === 401) {
-      wx.removeStorageSync('token');
-      wx.removeStorageSync('userInfo');
-      app.globalData.isLoggedIn = false;
-      
-      wx.showToast({
-        title: '登录已过期，请重新登录',
-        icon: 'none',
-        duration: 2000
-      });
-      
-      setTimeout(() => {
-        wx.navigateTo({
-          url: '/pages/auth/login',
-        });
-      }, 1000);
-    } else {
-      wx.showToast({
-        title: response.data.message || '请求失败',
-        icon: 'none',
-        duration: 2000
-      });
-    }
-    return Promise.reject(response);
+const responseInterceptor = (response) => {
+  if (response.statusCode === 401) {
+    // token过期，清除本地存储并跳转到登录页
+    wx.removeStorageSync('token')
+    wx.removeStorageSync('userInfo')
+    wx.navigateTo({
+      url: '/pages/auth/index'
+    })
+    return Promise.reject(new Error('未授权'))
   }
-  return response.data;
+  return response.data
+}
+
+/**
+ * 错误处理
+ */
+const errorHandler = (error) => {
+  wx.showToast({
+    title: error.message || '请求失败',
+    icon: 'none',
+    duration: 2000
+  })
+  return Promise.reject(error)
 }
 
 /**
  * 基础请求方法
  */
-function request(options) {
-  const baseUrl = app ? app.globalData.apiUrl : 'http://localhost:8000/api';
+const request = (options) => {
+  const { url, method = 'GET', data, header = {} } = options
   
-  // 拦截器处理
+  // 应用请求拦截器
   const config = requestInterceptor({
-    url: baseUrl + options.url,
-    method: options.method || 'GET',
-    data: options.data,
-    header: {
-      'Content-Type': 'application/json',
-      ...options.header
-    }
-  });
-  
+    url: `${BASE_URL}${url}`,
+    method,
+    data,
+    header
+  })
+
   return new Promise((resolve, reject) => {
     wx.request({
       ...config,
       success: (res) => {
         try {
-          const response = responseInterceptor(res);
-          resolve(response);
+          const response = responseInterceptor(res)
+          resolve(response)
         } catch (error) {
-          reject(error);
+          reject(error)
         }
       },
-      fail: (err) => {
-        wx.showToast({
-          title: '网络请求失败',
-          icon: 'none',
-          duration: 2000
-        });
-        reject(err);
+      fail: (error) => {
+        errorHandler(error)
+        reject(error)
       }
-    });
-  });
+    })
+  })
 }
 
 /**
  * GET请求
  */
-function get(url, data = {}, options = {}) {
-  return request({
-    url,
-    method: 'GET',
-    data,
-    ...options
-  });
+const get = (url, data, header) => {
+  return request({ url, method: 'GET', data, header })
 }
 
 /**
  * POST请求
  */
-function post(url, data = {}, options = {}) {
-  return request({
-    url,
-    method: 'POST',
-    data,
-    ...options
-  });
+const post = (url, data, header) => {
+  return request({ url, method: 'POST', data, header })
 }
 
 /**
  * PUT请求
  */
-function put(url, data = {}, options = {}) {
-  return request({
-    url,
-    method: 'PUT',
-    data,
-    ...options
-  });
+const put = (url, data, header) => {
+  return request({ url, method: 'PUT', data, header })
 }
 
 /**
  * DELETE请求
  */
-function del(url, data = {}, options = {}) {
-  return request({
-    url,
-    method: 'DELETE',
-    data,
-    ...options
-  });
+const del = (url, data, header) => {
+  return request({ url, method: 'DELETE', data, header })
 }
 
 /**
@@ -187,8 +155,7 @@ function upload(url, filePath, name = 'file', formData = {}, options = {}) {
   });
 }
 
-module.exports = {
-  request,
+export default {
   get,
   post,
   put,

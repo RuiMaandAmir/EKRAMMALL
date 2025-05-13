@@ -1,0 +1,279 @@
+/* 主题变量 */
+:root {
+  /* 品牌色 - 清新绿色系 */
+  --brand-color: #4CAF50;
+  --brand-color-light: #81C784;
+  --brand-color-lighter: #A5D6A7;
+  --brand-color-dark: #388E3C;
+  --brand-color-darker: #2E7D32;
+  
+  /* 功能色 - 柔和的辅助色 */
+  --success-color: #66BB6A;
+  --warning-color: #FFA726;
+  --danger-color: #EF5350;
+  --info-color: #29B6F6;
+  
+  /* 中性色 - 温暖的灰度 */
+  --neutral-color-1: #37474F;
+  --neutral-color-2: #546E7A;
+  --neutral-color-3: #78909C;
+  --neutral-color-4: #90A4AE;
+  --neutral-color-5: #B0BEC5;
+  --neutral-color-6: #CFD8DC;
+  --neutral-color-7: #ECEFF1;
+  --neutral-color-8: #F5F7FA;
+  
+  /* 背景色 - 柔和的背景 */
+  --background-color-base: #F8F9FA;
+  --background-color-light: #FFFFFF;
+  --background-color-dark: #E8F5E9;
+  
+  /* 文字颜色 */
+  --text-color-primary: var(--neutral-color-1);
+  --text-color-regular: var(--neutral-color-2);
+  --text-color-secondary: var(--neutral-color-3);
+  --text-color-placeholder: var(--neutral-color-4);
+  
+  /* 边框颜色 */
+  --border-color-base: var(--neutral-color-6);
+  --border-color-light: var(--neutral-color-7);
+  --border-color-lighter: var(--neutral-color-8);
+  --border-color-extra-light: #FFFFFF;
+  
+  /* 字体 */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-size-base: 14px;
+  --font-size-small: 13px;
+  --font-size-large: 16px;
+  --font-weight-base: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+  
+  /* 圆角 - 更柔和的圆角 */
+  --border-radius-base: 6px;
+  --border-radius-small: 4px;
+  --border-radius-large: 12px;
+  --border-radius-circle: 50%;
+  
+  /* 阴影 - 更柔和的阴影 */
+  --box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --box-shadow-dark: 0 6px 16px rgba(0, 0, 0, 0.08);
+  
+  /* 过渡 */
+  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 间距 */
+  --spacing-base: 8px;
+  --spacing-small: 4px;
+  --spacing-large: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+}
+
+/* 暗色主题 - 深色模式 */
+[data-theme="dark"] {
+  --brand-color: #66BB6A;
+  --brand-color-light: #81C784;
+  --brand-color-lighter: #A5D6A7;
+  --brand-color-dark: #4CAF50;
+  --brand-color-darker: #388E3C;
+  
+  --background-color-base: #1A1A1A;
+  --background-color-light: #242424;
+  --background-color-dark: #2C2C2C;
+  
+  --text-color-primary: #FFFFFF;
+  --text-color-regular: #E0E0E0;
+  --text-color-secondary: #B0B0B0;
+  --text-color-placeholder: #808080;
+  
+  --border-color-base: #404040;
+  --border-color-light: #4A4A4A;
+  --border-color-lighter: #545454;
+  --border-color-extra-light: #5E5E5E;
+  
+  --box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --box-shadow-dark: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 主题切换动画 */
+.theme-transition {
+  transition: var(--transition-base);
+}
+
+/* 主题相关工具类 */
+.bg-brand {
+  background-color: var(--brand-color);
+}
+
+.bg-success {
+  background-color: var(--success-color);
+}
+
+.bg-warning {
+  background-color: var(--warning-color);
+}
+
+.bg-danger {
+  background-color: var(--danger-color);
+}
+
+.bg-info {
+  background-color: var(--info-color);
+}
+
+.text-brand {
+  color: var(--brand-color);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-warning {
+  color: var(--warning-color);
+}
+
+.text-danger {
+  color: var(--danger-color);
+}
+
+.text-info {
+  color: var(--info-color);
+}
+
+.border-brand {
+  border-color: var(--brand-color);
+}
+
+.border-success {
+  border-color: var(--success-color);
+}
+
+.border-warning {
+  border-color: var(--warning-color);
+}
+
+.border-danger {
+  border-color: var(--danger-color);
+}
+
+.border-info {
+  border-color: var(--info-color);
+}
+
+/* 新增：卡片悬浮效果 */
+.card {
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-light);
+}
+
+/* 新增：按钮样式优化 */
+.btn {
+  border-radius: var(--border-radius-base);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.5px;
+  transition: var(--transition-base);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--box-shadow-base);
+}
+
+/* 新增：输入框样式优化 */
+.form-input {
+  border-radius: var(--border-radius-base);
+  transition: var(--transition-base);
+  border: 1px solid var(--border-color-base);
+  background-color: var(--background-color-light);
+}
+
+.form-input:focus {
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 2px var(--brand-color-lighter);
+}
+
+/* 新增：标签样式 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--border-radius-small);
+  font-size: var(--font-size-small);
+  background-color: var(--brand-color-lighter);
+  color: var(--brand-color-darker);
+}
+
+/* 新增：徽章样式 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  background-color: var(--brand-color);
+  color: white;
+}
+
+/* 新增：分割线样式 */
+.divider {
+  height: 1px;
+  background-color: var(--border-color-light);
+  margin: var(--spacing-large) 0;
+}
+
+/* 新增：列表样式优化 */
+.list-item {
+  padding: var(--spacing-base);
+  border-radius: var(--border-radius-base);
+  transition: var(--transition-base);
+}
+
+.list-item:hover {
+  background-color: var(--background-color-dark);
+}
+
+/* 新增：表格样式优化 */
+.table {
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+}
+
+.table th {
+  background-color: var(--background-color-dark);
+  font-weight: var(--font-weight-medium);
+}
+
+.table tr:hover {
+  background-color: var(--background-color-dark);
+}
+
+/* 新增：加载动画 */
+.loading {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--brand-color-lighter);
+  border-radius: 50%;
+  border-top-color: var(--brand-color);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} 

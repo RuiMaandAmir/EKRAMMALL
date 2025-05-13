@@ -1,0 +1,139 @@
+/* 图标基础样式 */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+/* 图标大小 */
+.icon-xs {
+  font-size: 12px;
+}
+
+.icon-sm {
+  font-size: 14px;
+}
+
+.icon-md {
+  font-size: 16px;
+}
+
+.icon-lg {
+  font-size: 20px;
+}
+
+.icon-xl {
+  font-size: 24px;
+}
+
+/* 图标颜色 */
+.icon-primary {
+  color: var(--primary-color);
+}
+
+.icon-success {
+  color: var(--success-color);
+}
+
+.icon-warning {
+  color: var(--warning-color);
+}
+
+.icon-danger {
+  color: var(--danger-color);
+}
+
+.icon-info {
+  color: var(--info-color);
+}
+
+/* 图标动画 */
+.icon-spin {
+  animation: icon-spin 2s infinite linear;
+}
+
+@keyframes icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 图标按钮 */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: var(--border-radius-circle);
+  cursor: pointer;
+  transition: all 0.3s;
+  background: transparent;
+  border: none;
+}
+
+.icon-btn:hover {
+  background-color: var(--border-color-lighter);
+}
+
+.icon-btn:active {
+  background-color: var(--border-color-light);
+}
+
+/* 图标组 */
+.icon-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-group .icon {
+  margin-right: 4px;
+}
+
+.icon-group .icon:last-child {
+  margin-right: 0;
+}
+
+/* 带文字的图标 */
+.icon-text {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-text .icon {
+  margin-right: 4px;
+}
+
+/* 图标徽标 */
+.icon-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--danger-color);
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+}
+
+/* 图标加载状态 */
+.icon-loading {
+  animation: icon-spin 1s infinite linear;
+}
+
+/* 图标禁用状态 */
+.icon-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+} 

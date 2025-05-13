@@ -1,147 +1,82 @@
 <!--首页-->
 <view class="container">
   <!-- 搜索栏 -->
-  <view class="search-bar" style="padding-top:{{statusBarHeight}}px;" bindtap="navigateToSearch">
-    <view class="search-icon">
-      <image src="/images/icon_search.png" mode="aspectFit"></image>
+  <view class="search-bar">
+    <view class="search-bar-inner" bindtap="onSearchTap">
+      <image class="search-icon" src="/images/icons/search.png" />
+      <input class="search-input" placeholder="搜索清真美食" disabled />
     </view>
-    <view class="search-input">搜索商品</view>
   </view>
 
-  <!-- 加载中状态 -->
-  <view class="loading-container" wx:if="{{loading}}">
-    <view class="loading-icon"></view>
-    <view class="loading-text">加载中...</view>
+  <!-- 轮播图 -->
+  <view class="banner">
+    <swiper indicator-dots autoplay circular>
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <image class="banner-image" src="{{item.image}}" mode="aspectFill" bindtap="onBannerTap" data-id="{{item.id}}" />
+      </swiper-item>
+    </swiper>
   </view>
 
-  <!-- 主要内容区域 -->
-  <view class="content-container" wx:else>
-    <!-- 轮播图 -->
-    <view class="banner">
-      <swiper class="banner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}" circular="{{true}}">
-        <block wx:for="{{banners}}" wx:key="id">
-          <swiper-item bindtap="handleBannerClick" data-url="{{item.linkUrl}}">
-            <image src="{{item.imageUrl}}" mode="aspectFill"></image>
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
-
-    <!-- 导航菜单 -->
-    <view class="nav-menu">
-      <scroll-view scroll-x="true" enable-flex="true" enhanced="true" show-scrollbar="false">
-        <view class="nav-item" wx:for="{{navItems}}" wx:key="id" bindtap="handleNavItemClick" data-url="{{item.url}}">
-          <view class="nav-icon">
-            <image src="{{item.icon}}" mode="aspectFit"></image>
-          </view>
-          <view class="nav-text">{{item.name}}</view>
-        </view>
-      </scroll-view>
-    </view>
-
-    <!-- 限时抢购 -->
-    <view class="section flash-sale">
-      <view class="section-header">
-        <view class="section-title">
-          <text>限时抢购</text>
-          <view class="countdown">
-            <text class="countdown-label">还剩</text>
-            <text class="countdown-time">{{countdownTime.hours}}</text>
-            <text class="countdown-colon">:</text>
-            <text class="countdown-time">{{countdownTime.minutes}}</text>
-            <text class="countdown-colon">:</text>
-            <text class="countdown-time">{{countdownTime.seconds}}</text>
-          </view>
-        </view>
-        <view class="section-more" bindtap="handleViewMore" data-type="flash">查看更多</view>
+  <!-- 分类导航 -->
+  <view class="category-nav">
+    <view class="category-grid">
+      <view class="category-item" wx:for="{{categories}}" wx:key="id" bindtap="onCategoryTap" data-id="{{item.id}}">
+        <image class="category-icon" src="{{item.icon}}" mode="aspectFit" />
+        <text class="category-name">{{item.name}}</text>
       </view>
-      
-      <scroll-view class="flash-sale-scroll" scroll-x="true" enable-flex="true" enhanced="true" show-scrollbar="false">
-        <view 
-          class="flash-sale-item" 
-          wx:for="{{flashSaleProducts}}" 
-          wx:key="id" 
-          bindtap="handleProductClick" 
-          data-id="{{item.id}}"
-        >
-          <view class="product-image">
-            <image src="{{item.image}}" mode="aspectFill"></image>
-          </view>
-          <view class="product-info">
-            <view class="product-price">
-              <text class="price">¥{{item.price}}</text>
-              <text class="original-price">¥{{item.originalPrice}}</text>
-            </view>
-            <view class="product-tag">抢购中</view>
-          </view>
-        </view>
-      </scroll-view>
     </view>
+  </view>
 
-    <!-- 推荐商品 -->
-    <view class="section featured">
-      <view class="section-header">
-        <view class="section-title">精选商品</view>
-        <view class="section-more" bindtap="handleViewMore" data-type="featured">查看更多</view>
+  <!-- 限时特惠 -->
+  <view class="flash-sale">
+    <view class="flash-sale-header">
+      <view class="flash-sale-title">限时特惠</view>
+      <view class="flash-sale-time">{{flashSaleTime}}</view>
+    </view>
+    <scroll-view class="flash-sale-list" scroll-x>
+      <view class="flash-sale-item" wx:for="{{flashSaleProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+        <image class="flash-sale-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="flash-sale-info">
+          <view class="flash-sale-name">{{item.name}}</view>
+          <view class="flash-sale-price">{{item.price}}</view>
+        </view>
       </view>
-      
-      <view class="product-grid">
-        <view 
-          class="product-item" 
-          wx:for="{{featuredProducts}}" 
-          wx:key="id" 
-          bindtap="handleProductClick" 
-          data-id="{{item.id}}"
-        >
-          <view class="product-image">
-            <image src="{{item.image}}" mode="aspectFill"></image>
-          </view>
+    </scroll-view>
+  </view>
+
+  <!-- 推荐商品 -->
+  <view class="recommend">
+    <view class="section-title">精选推荐</view>
+    <view class="product-list">
+      <view class="product-item" wx:for="{{recommendProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+        <image class="product-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="product-info">
           <view class="product-name">{{item.name}}</view>
-          <view class="product-price-row">
-            <text class="product-price">¥{{item.price}}</text>
-            <text class="product-original-price">¥{{item.originalPrice}}</text>
-          </view>
-          <view class="product-sales">已售{{item.sales}}件</view>
+          <view class="product-price">{{item.price}}</view>
         </view>
       </view>
     </view>
+  </view>
 
-    <!-- 分类商品 -->
-    <view 
-      class="section category-section" 
-      wx:for="{{categoryProducts}}" 
-      wx:key="id" 
-      wx:for-item="category"
-    >
-      <view class="section-header">
-        <view class="section-title">{{category.name}}</view>
-        <view class="section-more" bindtap="handleViewMore" data-type="category" data-id="{{category.id}}">查看更多</view>
-      </view>
-      
-      <view class="product-grid">
-        <view 
-          class="product-item" 
-          wx:for="{{category.products}}" 
-          wx:key="id" 
-          bindtap="handleProductClick" 
-          data-id="{{item.id}}"
-        >
-          <view class="product-image">
-            <image src="{{item.image}}" mode="aspectFill"></image>
-          </view>
-          <view class="product-name">{{item.name}}</view>
-          <view class="product-price-row">
-            <text class="product-price">¥{{item.price}}</text>
-            <text class="product-original-price">¥{{item.originalPrice}}</text>
-          </view>
-          <view class="product-sales">已售{{item.sales}}件</view>
+  <!-- 新品上市 -->
+  <view class="new-arrival">
+    <view class="section-title">新品上市</view>
+    <view class="new-arrival-list">
+      <view class="new-arrival-item" wx:for="{{newProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+        <image class="new-arrival-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="new-arrival-info">
+          <view class="new-arrival-name">{{item.name}}</view>
+          <view class="new-arrival-price">{{item.price}}</view>
         </view>
       </view>
     </view>
   </view>
-  
-  <!-- 回到顶部按钮 -->
-  <view class="back-to-top" wx:if="{{showBackToTop}}" bindtap="backToTop">
-    <image src="/images/icon_top.png" mode="aspectFit"></image>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore}}">
+    <text>加载更多...</text>
   </view>
+
+  <!-- 广告弹窗 -->
+  <ad-popup visible="{{showAd}}" adData="{{adData}}" bind:close="onAdClose" />
 </view> 

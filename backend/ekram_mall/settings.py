@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'promotions',
     'analytics',
     'dashboard',
+    'advertisements',  # 添加广告应用
 ]
 
 MIDDLEWARE = [

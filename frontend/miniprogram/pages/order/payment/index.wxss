@@ -1,0 +1,175 @@
+.container {
+  padding: 30rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 支付金额 */
+.amount-section {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.amount-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.amount-value {
+  font-size: 60rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 支付方式 */
+.payment-section {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.payment-option:last-child {
+  border-bottom: none;
+}
+
+.payment-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 20rpx;
+}
+
+.payment-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.payment-radio {
+  width: 40rpx;
+  height: 40rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 50%;
+  position: relative;
+}
+
+.payment-radio.active {
+  border-color: #07c160;
+  background: #07c160;
+}
+
+.payment-radio.active::after {
+  content: '';
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  background: #fff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 支付按钮 */
+.pay-btn {
+  width: 100%;
+  height: 88rpx;
+  background: #07c160;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60rpx;
+}
+
+.pay-btn.disabled {
+  background: #ccc;
+}
+
+/* 倒计时 */
+.countdown {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 20rpx;
+}
+
+.countdown-text {
+  color: #ff4d4f;
+}
+
+/* 支付结果 */
+.result-section {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.result-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.result-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.result-desc {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30rpx;
+}
+
+.action-btn {
+  width: 240rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn.primary {
+  background: #07c160;
+  color: #fff;
+}
+
+.action-btn.secondary {
+  background: #fff;
+  color: #333;
+  border: 1rpx solid #ddd;
+} 

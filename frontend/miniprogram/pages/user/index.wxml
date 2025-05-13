@@ -1,0 +1,88 @@
+<!--用户中心页面-->
+<view class="container">
+  <!-- 用户信息头部 -->
+  <view class="user-header">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
+      <view class="user-detail">
+        <view class="nickname">{{userInfo.nickName || '未登录'}}</view>
+        <view class="user-id" wx:if="{{userInfo}}">ID: {{userInfo.userId}}</view>
+      </view>
+    </view>
+    <image class="settings-btn" src="/images/icons/settings.png" bindtap="goToSettings" />
+  </view>
+
+  <!-- 订单状态 -->
+  <view class="order-status">
+    <view class="status-header">
+      <text class="status-title">我的订单</text>
+      <text class="view-all" bindtap="viewAllOrders">查看全部</text>
+    </view>
+    <view class="status-list">
+      <view class="status-item" bindtap="viewOrders" data-status="unpaid">
+        <image class="status-icon" src="/images/icons/unpaid.png" />
+        <text class="status-text">待付款</text>
+        <view class="status-badge" wx:if="{{orderCounts.unpaid > 0}}">{{orderCounts.unpaid}}</view>
+      </view>
+      <view class="status-item" bindtap="viewOrders" data-status="unshipped">
+        <image class="status-icon" src="/images/icons/unshipped.png" />
+        <text class="status-text">待发货</text>
+        <view class="status-badge" wx:if="{{orderCounts.unshipped > 0}}">{{orderCounts.unshipped}}</view>
+      </view>
+      <view class="status-item" bindtap="viewOrders" data-status="shipped">
+        <image class="status-icon" src="/images/icons/shipped.png" />
+        <text class="status-text">待收货</text>
+        <view class="status-badge" wx:if="{{orderCounts.shipped > 0}}">{{orderCounts.shipped}}</view>
+      </view>
+      <view class="status-item" bindtap="viewOrders" data-status="completed">
+        <image class="status-icon" src="/images/icons/completed.png" />
+        <text class="status-text">已完成</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="function-list">
+    <view class="function-group">
+      <view class="function-item" bindtap="goToAddress">
+        <image class="function-icon" src="/images/icons/address.png" />
+        <text class="function-name">收货地址</text>
+        <image class="arrow" src="/images/icons/arrow-right.png" />
+      </view>
+      <view class="function-item" bindtap="goToFavorites">
+        <image class="function-icon" src="/images/icons/favorite.png" />
+        <text class="function-name">我的收藏</text>
+        <image class="arrow" src="/images/icons/arrow-right.png" />
+      </view>
+    </view>
+
+    <view class="function-group">
+      <view class="function-item" bindtap="goToCoupons">
+        <image class="function-icon" src="/images/icons/coupon.png" />
+        <text class="function-name">优惠券</text>
+        <image class="arrow" src="/images/icons/arrow-right.png" />
+      </view>
+      <view class="function-item" bindtap="goToPoints">
+        <image class="function-icon" src="/images/icons/points.png" />
+        <text class="function-name">积分商城</text>
+        <image class="arrow" src="/images/icons/arrow-right.png" />
+      </view>
+    </view>
+
+    <view class="function-group">
+      <view class="function-item" bindtap="goToCustomerService">
+        <image class="function-icon" src="/images/icons/service.png" />
+        <text class="function-name">联系客服</text>
+        <image class="arrow" src="/images/icons/arrow-right.png" />
+      </view>
+      <view class="function-item" bindtap="goToAbout">
+        <image class="function-icon" src="/images/icons/about.png" />
+        <text class="function-name">关于我们</text>
+        <image class="arrow" src="/images/icons/arrow-right.png" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-btn" bindtap="logout" wx:if="{{userInfo}}">退出登录</view>
+</view> 

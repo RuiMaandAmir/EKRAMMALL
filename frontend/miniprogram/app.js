@@ -6,6 +6,7 @@ App({
     
     // 获取设备信息
     this.getSystemInfo();
+    this.loadCurrentAd();
   },
   
   checkLoginStatus: function () {
@@ -54,6 +55,19 @@ App({
     systemInfo: null,
     navBarHeight: 0,
     baseUrl: 'http://localhost:8000',
-    apiUrl: 'http://localhost:8000/api'
+    apiUrl: 'http://localhost:8000/api',
+    currentAd: null
+  },
+
+  // 加载当前广告
+  loadCurrentAd() {
+    wx.request({
+      url: `${this.globalData.baseUrl}/api/advertisements/current/`,
+      success: (res) => {
+        if (res.data.data) {
+          this.globalData.currentAd = res.data.data;
+        }
+      }
+    });
   }
 }) 
